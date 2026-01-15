@@ -18,6 +18,6 @@ setup(
     packages=['gialint', 'gialint._checks'],
     python_requires='>=3.11',
     install_requires=[
-        'galaxy-util==25.0.4',
+        'galaxy-util>=25.0',
     ],
 )
