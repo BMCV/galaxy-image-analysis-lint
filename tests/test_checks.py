@@ -9,7 +9,11 @@ tests_root_path = pathlib.Path(__file__).parent
 
 
 def _create_test(code, xml_tests_filepath, xml_test):
-    expected_lines_with_violations = [int(line.strip()) for line in xml_test.attrib.get('lines_with_volations', '').split(',')]
+    expected_lines_with_violations_str = xml_test.attrib.get('lines_with_volations', '')
+    expected_lines_with_violations = (
+        [int(line.strip()) for line in expected_lines_with_violations_str.split(',')]
+        if expected_lines_with_violations_str.strip() else list()
+    )
 
     def format_lines_list(lines_list):
         return ', '.join(f'{line}' for line in lines_list) or 'none'
@@ -30,7 +34,9 @@ def _create_tests(code):
     xml_tests_filepath = tests_root_path / 'checks' / f'{code}.xml'
     xml_tests = etree.parse(xml_tests_filepath).getroot()
     for xml_test in xml_tests:
-        assert xml_test.tag == 'test'
+        if isinstance(xml_test, etree._Comment):
+            continue
+        assert xml_test.tag == 'test-tool', xml_test.tag
         yield _create_test(code, xml_tests_filepath, xml_test)
 
 

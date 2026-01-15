@@ -1,5 +1,5 @@
 <tests>
-    <test lines_with_volations="5,6,8,9,13">
+    <test-tool lines_with_volations="5,6,8,9,13">
         <inputs>
             <param format="txt" type="data"/>
             <param format="tsv" type="data"/>
@@ -13,5 +13,5 @@
                 <param format="csv" type="data"/>
             </container>
         </inputs>
-    </test>
+    </test-tool>
 </tests>

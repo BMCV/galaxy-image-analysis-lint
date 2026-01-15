@@ -1,0 +1,110 @@
+<tests>
+
+    <!-- SUCCESS TEST CASES -->
+
+    <test-tool>
+        <inputs>
+            <param format="tiff" type="data"/>
+        </inputs>
+    </test-tool>
+
+    <test-tool>
+        <command><![CDATA[
+            #if $input1.extension == "zarr"
+                --input '$input1.extra_files_path/$input1.metadata.store_root'
+            #else
+                --input '$input1'
+            #end if
+        ]]></command>
+        <inputs>
+            <param name="input1" format="tiff,zarr" type="data"/>
+            <param name="input2" format="tiff" type="data"/>
+        </inputs>
+    </test-tool>
+
+    <test-tool>
+        <command><![CDATA[
+            #if $details.input1.extension == "zarr"
+                --input '$details.input1.extra_files_path/$details.input1.metadata.store_root'
+            #else
+                --input '$details.input1'
+            #end if
+        ]]></command>
+        <inputs>
+            <section name="details">
+                <param name="input1" format="tiff,zarr" type="data"/>
+                <param name="input2" format="tiff" type="data"/>
+            </section>
+        </inputs>
+    </test-tool>
+
+    <!-- FAILURE TEST CASES -->
+
+    <test-tool lines_with_volations="45">
+        <inputs>
+            <param name="zarr_input" format="tiff,zarr" type="data"/>
+        </inputs>
+    </test-tool>
+
+    <test-tool lines_with_volations="59">
+        <command><![CDATA[
+            #if $input1.extension == "zarr"
+                --input '$details.input1.extra_files_path/$details.input1.metadata.store_root'
+            #else
+                --input '$details.input1'
+            #end if
+        ]]></command>
+        <inputs>
+            <section name="details">
+                <param name="input" format="tiff,zarr" type="data"/>
+                <param name="input2" format="tiff" type="data"/>
+            </section>
+        </inputs>
+    </test-tool>
+
+    <test-tool lines_with_volations="75">
+        <command><![CDATA[
+            #if $details.input1.extension == "zarr"
+                --input '$input1.extra_files_path/$details.input1.metadata.store_root'
+            #else
+                --input '$details.input1'
+            #end if
+        ]]></command>
+        <inputs>
+            <section name="details">
+                <param name="input1" format="tiff,zarr" type="data"/>
+                <param name="input2" format="tiff" type="data"/>
+            </section>
+        </inputs>
+    </test-tool>
+
+    <test-tool lines_with_volations="91">
+        <command><![CDATA[
+            #if $details.input1.extension == "zarr"
+                --input '$details.input1.extra_files_path/$input1.metadata.store_root'
+            #else
+                --input '$details.input1'
+            #end if
+        ]]></command>
+        <inputs>
+            <section name="details">
+                <param name="input1" format="tiff,zarr" type="data"/>
+                <param name="input2" format="tiff" type="data"/>
+            </section>
+        </inputs>
+    </test-tool>
+
+    <test-tool lines_with_volations="104">
+        <command><![CDATA[
+            --input '$details.input1'
+            --input '$details.input2'
+        ]]></command>
+        <inputs>
+            <section name="details">
+                <param name="input1" format="tiff,zarr" type="data"/>
+                <param name="input2" format="tiff" type="data"/>
+            </section>
+        </inputs>
+    </test-tool>
+
+</tests>
