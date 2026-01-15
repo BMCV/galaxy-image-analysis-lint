@@ -1,4 +1,4 @@
-class LintError(BaseException):
+class Context(BaseException):
     
     def __init__(self, code, description, filepath, line):
         super().__init__(description)

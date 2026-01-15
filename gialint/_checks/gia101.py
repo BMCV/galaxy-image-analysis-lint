@@ -1,4 +1,4 @@
-def check(tree, error):
+def check(tree):
     root = tree.getroot()
     for param in root.findall(".//inputs//param[@type='data']"):
         formats = [fmt.strip().lower() for fmt in param.get('format').split(',')]
@@ -6,5 +6,4 @@ def check(tree, error):
             ('tabular' in formats) != ('tsv' in formats) or
             ('csv' in formats and 'tsv' not in formats)
         ):
-            error.line = param.sourceline
-            raise error
+            yield param.sourceline
