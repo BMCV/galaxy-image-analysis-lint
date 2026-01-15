@@ -1,4 +1,12 @@
 from . import codes
+from .version import __version__
+
+__all__ = [
+    '__version__',
+    'codes',
+    'list_codes',
+    'check',
+]
 
 
 def list_codes():

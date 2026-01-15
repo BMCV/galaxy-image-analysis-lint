@@ -4,9 +4,13 @@ import sys
 
 from galaxy.util import xml_macros
 
-from . import codes, list_codes, check
 from gialint._context import Context
 
+from . import (
+    check,
+    codes,
+    list_codes,
+)
 
 gialint_root_path = pathlib.Path(__file__).parent
 
