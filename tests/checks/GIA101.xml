@@ -1,0 +1,17 @@
+<tests>
+    <test lines_with_volations="5,6,8,9,13">
+        <inputs>
+            <param format="txt" type="data"/>
+            <param format="tsv" type="data"/>
+            <param format="tabular" type="data"/>
+            <param format="tsv,tabular" type="data"/>
+            <param format="csv" type="data"/>
+            <param format="csv,tsv" type="data"/>
+            <param format="csv,tsv,tabular" type="data"/>
+            <param type="data"/>
+            <container>
+                <param format="csv" type="data"/>
+            </container>
+        </inputs>
+    </test>
+</tests>

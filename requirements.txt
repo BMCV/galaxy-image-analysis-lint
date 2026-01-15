@@ -1,0 +1,2 @@
+galaxy-util==25.0.4
+lxml==6.0.2
