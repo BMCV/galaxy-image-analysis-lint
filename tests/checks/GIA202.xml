@@ -1,0 +1,44 @@
+<tests>
+    <test-tool>
+    </test-tool>
+    <test-tool>
+        <command>
+        </command>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            #if $input1 == "ok"
+                echo "ok"
+            #end if
+        ]]></command>
+    </test-tool>
+    <test-tool lines_with_volations="16">
+        <command><![CDATA[
+            #if $input1 == "ok"
+                echo "ok"
+            #endif
+        ]]></command>
+    </test-tool>
+    <test-tool>
+        <configfiles>
+        </configfiles>
+    </test-tool>
+    <test-tool>
+        <configfiles>
+            <configfile><![CDATA[
+                #if $input1 == "ok"
+                    key: value
+                #end if
+            ]]></configfile>
+        </configfiles>
+    </test-tool>
+    <test-tool lines_with_volations="37">
+        <configfiles>
+            <configfile><![CDATA[
+                #if $input1 == "ok"
+                    key: value
+                #endif
+            ]]></configfile>
+        </configfiles>
+    </test-tool>
+</tests>
