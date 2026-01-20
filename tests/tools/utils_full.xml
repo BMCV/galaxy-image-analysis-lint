@@ -24,6 +24,21 @@
             <option value="other"/>
         </param>
 
+        <conditional name="cond">
+            <param name="cond_select" type="select">
+                <option value="default" selected="true"/>
+                <option value="other"/>
+            </param>
+            <when value="default">
+                <param name="text_1" type="text" value="value_1"/>
+                <param name="text_2" type="text" value="value_2"/>
+            </when>
+            <when value="other">
+                <param name="text_0" type="text" value="value_0"/>
+                <param name="text_1" type="text" value="value_3"/>
+            </when>
+        </conditional>
+
     </inputs>
     <tests>
 

@@ -75,6 +75,11 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'default')
         self.assertEqual(test_inputs['select_1'], 'default')
 
+        # Validate conditionals
+        self.assertEqual(test_inputs['cond.text_1'], 'value_1')
+        self.assertEqual(test_inputs['cond.text_2'], 'value_2')
+        self.assertNotIn('cond.text_0', test_inputs)
+
     def test_get_test_inputs2(self):
         test_inputs = (
             utils.get_test_inputs(self.inputs_xml, self.test_xml_list[1])
