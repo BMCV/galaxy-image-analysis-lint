@@ -49,7 +49,7 @@ for tool_xml_path in list_tool_xml(working_path):
         if violations:
             print('FAILED')
             for context in violations:
-                print(str(context))
+                print(str(context), file=sys.stderr)
         else:
             print('OK')
         violations_count += len(violations)
