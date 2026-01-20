@@ -25,16 +25,34 @@ def _create_boolean_converter(param):
 
 
 def get_test_inputs(inputs_xml, test_xml):
-    inputs = dict()
-    input_types = dict()
+    inputs = dict()  # mps the full name of an input parameter to its raw value (prior to type conversion)
+    input_types = dict()  # maps the full name of an input parameter to its type converter
+    conditional_inputs = dict()  # maps the full name of a conditional to its first input parameter
 
-    # Parse input parameters, default values, and type converters
+    # Parse input parameters, default values, test values, and type converters
     for param in inputs_xml.findall('.//param'):
         full_param_name = get_full_param_name(param)
         converter = None
 
         # Skip invalid parameters (this is handled by `planemo lint`)
         if (param_type := param.attrib.get('type', '').lower()) == '':
+            continue
+
+        # Skip if the parameter is inactive due to a parent conditional
+        container = param.getparent()
+        is_active = True
+        while container.tag not in ('inputs', 'test'):
+            if container.tag == 'when' and container.getparent().tag == 'conditional':
+                conditional_name = get_full_param_name(container.getparent())
+                conditional_input = conditional_inputs[conditional_name]
+                is_active = (
+                    inputs[conditional_input] == container.attrib.get('value')
+                )
+            if is_active:
+                container = container.getparent()
+            else:
+                break
+        if not is_active:
             continue
 
         # Read the value from the `value` attribute
@@ -53,16 +71,18 @@ def get_test_inputs(inputs_xml, test_xml):
         # Register type converter
         input_types[full_param_name] = converter or _types.get(param_type)
 
-    # Parse test parameters
-    for param in test_xml.findall('.//param'):
-        full_param_name = get_full_param_name(param)
+        # Register the input for a conditional
+        if param.getparent().tag == 'conditional':
+            conditional_name = get_full_param_name(param.getparent())
+            conditional_inputs[conditional_name] = full_param_name
 
-        # Skip invalid parameters (this is handled by `planemo lint`)
-        if full_param_name not in inputs:
-            continue
-
-        # Read the value from the `value` attribute
-        inputs[full_param_name] = param.attrib.get('value')
+        # Read test value
+        if (
+            test_param := test_xml.findall(
+                './' + '/'.join(f'param[@name="{name}"]' for name in full_param_name.split('.'))
+            )
+        ):
+            inputs[full_param_name] = test_param[0].attrib.get('value')
 
     # Return inputs and apply type converters
     return {
