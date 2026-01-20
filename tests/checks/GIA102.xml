@@ -1,0 +1,33 @@
+<tests>
+    <test-tool lines_with_volations="6,7,9,15,17,23,25,27,28">
+        <inputs>
+            <param format="txt" type="data"/>
+            <param format="tiff" type="data"/>
+            <param format="tif" type="data"/>
+            <param format="tif,tiff" type="data"/>
+            <container>
+                <param format="tif" type="data"/>
+            </container>
+        </inputs>
+        <outputs>
+            <data format="txt"/>
+            <data format="tiff"/>
+            <data format="tif"/>
+            <data format="tiff" from_work_dir="out.tiff"/>
+            <data format="tiff" from_work_dir="out.tif"/>
+        </outputs>
+        <tests>
+            <test>
+                <param ftype="txt"/>
+                <param ftype="tiff"/>
+                <param ftype="tif"/>
+                <param ftype="tiff" value="file.tiff"/>
+                <param ftype="tiff" value="file.tif"/>
+                <container>
+                    <param ftype="tif"/>
+                    <param ftype="tiff" value="file.tif"/>
+                </container>
+            </test>
+        </tests>
+    </test-tool>
+</tests>
