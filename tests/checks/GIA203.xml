@@ -1,0 +1,82 @@
+<tests>
+    <test-tool>
+    </test-tool>
+    <test-tool>
+        <command>
+        </command>
+    </test-tool>
+    <test-tool>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
+        <configfiles>
+            <configfile><![CDATA[
+                {
+                    #if $input1 == "ok"
+                        "key": "value"
+                    #end if
+                }
+            ]]></configfile>
+        </configfiles>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <!--
+        This test case encounters a `ParseError` but this check should pass,
+        because there is a dedicated code/check for such errors.
+        -->
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
+        <configfiles>
+            <configfile><![CDATA[
+                {
+                    #if $input1 == "ok"
+                        "key": "value"
+                    #endif
+                }
+            ]]></configfile>
+        </configfiles>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <!--
+        This test case encounters a `NotFound` error but this check should pass,
+        because there is a dedicated code/check for such errors.
+        -->
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
+        <configfiles>
+            <configfile><![CDATA[
+                {
+                    #if $input2 == "ok"
+                        "key": "value"
+                    #endif
+                }
+            ]]></configfile>
+        </configfiles>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool lines_with_volations="72">
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
+        <configfiles>
+            <configfile><![CDATA[
+                 #if $input1 == "ok"
+                     "key": "value"
+                 #end if
+            ]]></configfile>
+        </configfiles>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+</tests>

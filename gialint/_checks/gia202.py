@@ -1,5 +1,11 @@
+from Cheetah import NameMapper
 from Cheetah.Template import Template
 from Cheetah.Parser import ParseError
+
+from ..utils import (
+    get_test_inputs,
+    list_tests,
+)
 
 
 def check(tool_xml_root):
@@ -8,8 +14,20 @@ def check(tool_xml_root):
         'configfiles/configfile',
     ):
         for template in tool_xml_root.findall(f'./{path}'):
-            namespace = dict()
+
+            # Test build the template
             try:
-                Template(template.text, searchList=namespace)
+                Template(template.text, searchList=dict())
             except ParseError:
                 yield template.sourceline
+                continue
+
+            # Build the template for each test (with the corresponding namespace)
+            if (inputs_xml_list := tool_xml_root.findall(f'./inputs')):
+                inputs_xml = inputs_xml_list[0]
+                for test_xml in list_tests(tool_xml_root):
+                    namespace = get_test_inputs(inputs_xml, test_xml)
+                    try:
+                        str(Template(template.text, searchList=namespace))
+                    except NameMapper.NotFound:
+                        yield template.sourceline

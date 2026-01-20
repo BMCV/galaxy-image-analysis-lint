@@ -1,11 +1,4 @@
-def get_full_param_name(param_xml):
-    tokens = []
-    current = param_xml
-    while current.tag != 'inputs':
-        if current_name := current.get('name'):
-            tokens.append(current_name)
-        current = current.getparent()
-    return '.'.join(tokens[::-1])
+from ..utils import get_full_param_name
 
 
 def check(tool_xml_root):

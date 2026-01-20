@@ -41,4 +41,15 @@
             ]]></configfile>
         </configfiles>
     </test-tool>
+    <test-tool lines_with_volations="46">
+        <inputs name="input1" type="text" value="ok"/>
+        <command><![CDATA[
+            #if $input1 == "ok"
+                echo "ok"
+            #end if
+        ]]></command>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
 </tests>
