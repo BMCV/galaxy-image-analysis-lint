@@ -1,6 +1,14 @@
 <tool>
     <inputs>
+
         <param name="llegal_type" type="illegal"/>
+
+        <conditional name="illegal_conditional">
+            <when value="">
+                <param name="param" type="text"/>
+            </when>
+        </conditional>
+
     </inputs>
     <tests>
         <test/>

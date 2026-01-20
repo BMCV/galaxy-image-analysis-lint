@@ -44,10 +44,13 @@ def get_test_inputs(inputs_xml, test_xml):
         while container.tag not in ('inputs', 'test'):
             if container.tag == 'when' and container.getparent().tag == 'conditional':
                 conditional_name = get_full_param_name(container.getparent())
-                conditional_input = conditional_inputs[conditional_name]
-                is_active = (
-                    inputs[conditional_input] == container.attrib.get('value')
-                )
+                if conditional_name in conditional_inputs:
+                    conditional_input = conditional_inputs[conditional_name]
+                    is_active = (
+                        inputs[conditional_input] == container.attrib.get('value')
+                    )
+                else:
+                    is_active = False
             if is_active:
                 container = container.getparent()
             else:
