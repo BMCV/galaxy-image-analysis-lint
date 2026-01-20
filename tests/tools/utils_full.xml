@@ -1,0 +1,57 @@
+<tool>
+    <inputs>
+
+        <param name="text_with_default" type="text" value="default"/>
+        <param name="text_without_default" type="text"/>
+
+        <param name="integer_with_default" type="integer" value="1"/>
+        <param name="integer_without_default" type="integer"/>
+
+        <param name="float_with_default" type="float" value="1"/>
+        <param name="float_without_default" type="float"/>
+
+        <param name="boolean_1" type="boolean" checked="true"/>
+        <param name="boolean_2" type="boolean" checked="false" falsevalue="FALSE" truevalue="TRUE"/>
+
+        <param name="color_with_default" type="color" value="#ff0000"/>
+        <param name="color_without_default" type="color"/>
+
+        <param name="hidden_with_default" type="hidden" value="default"/>
+        <param name="hidden_without_default" type="hidden"/>
+
+        <param name="select_1" type="select">
+            <option value="default" selected="true"/>
+            <option value="other"/>
+        </param>
+
+    </inputs>
+    <tests>
+
+        <!-- Test 1: Test default parameter values -->
+        <test/>
+
+        <!-- Test 2: Test overridden parameter values -->
+        <test>
+            <param name="text_with_default" value="override"/>
+            <param name="text_without_default" value="override"/>
+
+            <param name="integer_with_default" value="2"/>
+            <param name="integer_without_default" value="2"/>
+
+            <param name="float_with_default" value="2"/>
+            <param name="float_without_default" value="2"/>
+
+            <param name="boolean_1" value="false"/>
+            <param name="boolean_2" value="true"/>
+
+            <param name="color_with_default" value="#00ff00"/>
+            <param name="color_without_default" value="#00ff00"/>
+
+            <param name="hidden_with_default" value="override"/>
+            <param name="hidden_without_default" value="override"/>
+
+            <param name="select_1" value="other"/>
+        </test>
+
+    </tests>
+</tool>

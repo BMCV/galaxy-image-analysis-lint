@@ -1,0 +1,8 @@
+<tool>
+    <inputs>
+        <param name="llegal_type" type="illegal"/>
+    </inputs>
+    <tests>
+        <test/>
+    </tests>
+</tool>
