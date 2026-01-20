@@ -44,17 +44,12 @@ def get_test_inputs(inputs_xml, test_xml):
         while container.tag not in ('inputs', 'test'):
             if container.tag == 'when' and container.getparent().tag == 'conditional':
                 conditional_name = get_full_param_name(container.getparent())
-                if conditional_name in conditional_inputs:
-                    conditional_input = conditional_inputs[conditional_name]
-                    is_active = (
-                        inputs[conditional_input] == container.attrib.get('value')
-                    )
-                else:
+                if conditional_name not in conditional_inputs or (
+                    inputs[conditional_inputs[conditional_name]] != container.attrib.get('value')
+                ):
                     is_active = False
-            if is_active:
-                container = container.getparent()
-            else:
-                break
+                    break
+            container = container.getparent()
         if not is_active:
             continue
 
