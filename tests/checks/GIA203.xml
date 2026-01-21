@@ -6,12 +6,6 @@
         </command>
     </test-tool>
     <test-tool>
-        <inputs>
-            <param name="input1" type="text" value="ok"/>
-            <section name="sect">
-                <param name="input2" type="integer" value="0"/>
-            </section>
-        </inputs>
         <configfiles>
             <configfile><![CDATA[
                 {
@@ -21,6 +15,12 @@
                 }
             ]]></configfile>
         </configfiles>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+            <section name="sect">
+                <param name="input2" type="integer" value="0"/>
+            </section>
+        </inputs>
         <tests>
             <test/>
         </tests>
@@ -30,9 +30,6 @@
         This test case encounters a `ParseError` but this check should pass,
         because there is a dedicated code/check for such errors.
         -->
-        <inputs>
-            <param name="input1" type="text" value="ok"/>
-        </inputs>
         <configfiles>
             <configfile><![CDATA[
                 {
@@ -42,6 +39,9 @@
                 }
             ]]></configfile>
         </configfiles>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
         <tests>
             <test/>
         </tests>
@@ -51,9 +51,6 @@
         This test case encounters a `NotFound` error but this check should pass,
         because there is a dedicated code/check for such errors.
         -->
-        <inputs>
-            <param name="input1" type="text" value="ok"/>
-        </inputs>
         <configfiles>
             <configfile><![CDATA[
                 {
@@ -63,14 +60,14 @@
                 }
             ]]></configfile>
         </configfiles>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
         <tests>
             <test/>
         </tests>
     </test-tool>
-    <test-tool lines_with_volations="75">
-        <inputs>
-            <param name="input1" type="text" value="ok"/>
-        </inputs>
+    <test-tool lines_with_volations="72">
         <configfiles>
             <configfile><![CDATA[
                  #if $input1 == "ok"
@@ -78,6 +75,9 @@
                  #end if
             ]]></configfile>
         </configfiles>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
         <tests>
             <test/>
         </tests>

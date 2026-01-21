@@ -1,4 +1,4 @@
-from ..utils import get_full_param_name
+from ..utils import get_full_name
 
 
 def check(tool_xml_root):
@@ -8,7 +8,7 @@ def check(tool_xml_root):
     for param in tool_xml_root.findall('.//inputs//param[@type="data"]'):
         formats = [fmt.strip().lower() for fmt in param.get('format', '').split(',')]
         if 'zarr' in formats or 'ome.zarr' in formats:
-            full_param_name = get_full_param_name(param)
+            full_param_name = get_full_name(param)
             if command is None or not all(
                 (
                     token in command
