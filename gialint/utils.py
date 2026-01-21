@@ -51,6 +51,17 @@ class InputDataset:
     def ext(self):
         return self.extension
 
+    @staticmethod
+    def converter(multiple: bool = False):
+        def _converter(value: str):
+            if multiple:
+                return [
+                    InputDataset(filepath) for filepath in value.split(',')
+                ]
+            else:
+                return InputDataset(value)
+        return _converter
+
 
 def get_test_inputs(inputs_root, test_root):
     inputs = dict()  # mps the full name of an input parameter to its raw value (prior to type conversion)
@@ -110,7 +121,9 @@ def get_test_inputs(inputs_root, test_root):
         if param_type in ('text', 'integer', 'float', 'color', 'hidden', 'data'):
             inputs[full_node_name] = node.attrib.get('value')
             if param_type == 'data':
-                converter = InputDataset
+                converter = InputDataset.converter(
+                    node.attrib.get('multiple', '').lower() == 'true',
+                )
 
         # Read the value from the `checked` attribute
         if param_type in ('boolean',):

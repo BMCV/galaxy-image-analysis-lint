@@ -75,20 +75,28 @@
     </test-tool>
     <test-tool>
         <command><![CDATA[
+
             echo "$input1"
             echo "$input1.ext"
             echo "$input1.extension"
             echo "$output1"
+
+            #for $input in $input2
+                echo '$input'
+            #end for
+
         ]]></command>
         <inputs>
             <param name="input1" type="data"/>
+            <param name="input2" type="data" multiple="true"/>
         </inputs>
         <outputs>
             <data name="output1"/>
         </outputs>
         <tests>
             <test>
-                <param name="input1" value="input.tiff"/>
+                <param name="input1" value="input1.tiff"/>
+                <param name="input2" value="input1.tiff,input2.tiff"/>
             </test>
         </tests>
     </test-tool>
