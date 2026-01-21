@@ -1,3 +1,5 @@
+import pathlib
+
 from lxml import etree
 
 
@@ -33,6 +35,21 @@ def _get_node_by_name(full_name, root_xml, multiple: bool = False):
         return nodes
     else:
         return nodes[0] if nodes else None
+
+
+class InputDataset:
+
+    def __init__(self, filepath: str):
+        self._filepath = filepath
+
+    def __str__(self) -> str:
+        return self._filepath
+
+    def extension(self):
+        return pathlib.Path(self._filepath).suffix
+
+    def ext(self):
+        return self.extension
 
 
 def get_test_inputs(inputs_root, test_root):
@@ -90,8 +107,10 @@ def get_test_inputs(inputs_root, test_root):
             continue
 
         # Read the value from the `value` attribute
-        if param_type in ('text', 'integer', 'float', 'color', 'hidden'):
+        if param_type in ('text', 'integer', 'float', 'color', 'hidden', 'data'):
             inputs[full_node_name] = node.attrib.get('value')
+            if param_type == 'data':
+                converter = InputDataset
 
         # Read the value from the `checked` attribute
         if param_type in ('boolean',):

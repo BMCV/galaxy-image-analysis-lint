@@ -73,4 +73,19 @@
             <test/>
         </tests>
     </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo "$input1"
+            echo "$input1.ext"
+            echo "$input1.extension"
+        ]]></command>
+        <inputs>
+            <param name="input1" type="data"/>
+        </inputs>
+        <tests>
+            <test>
+                <param name="input1" value="input.tiff"/>
+            </test>
+        </tests>
+    </test-tool>
 </tests>
