@@ -190,7 +190,7 @@ def get_base_namespace(tool_xml_root):
         '__tool_directory__': '$__tool_directory__',
         'input': None,  # shadow the built-in `input` because it causes hang-ups
     }
-    for configfile in tool_xml_root.findall('./configfiles/configfile'):
+    for configfile in tool_xml_root.xpath('./configfiles/*[self::configfile or self::inputs]'):
         if (name := configfile.attrib.get('name')):
             ns[name] = f'${name}'
     for output in tool_xml_root.findall('./outputs/data'):
