@@ -8,28 +8,28 @@ from gialint import utils
 tools_root_path = pathlib.Path(__file__).parent / 'tools'
 
 
-#class flat_dict_to_nested(unittest.TestCase):
-#
-#    def test(self):
-#        flat = {
-#            'root.key1': '1',
-#            'root.key2': '2',
-#            'root.sub1.key1': '1.1',
-#            'root.sub1.key2': '1.2',
-#        }
-#        self.assertEqual(
-#            utils.flat_dict_to_nested(flat),
-#            {
-#                'root': {
-#                    'key1': '1',
-#                    'key2': '2',
-#                    'sub1': {
-#                        'key1': '1.1',
-#                        'key2': '1.2',
-#                    },
-#                },
-#            },
-#        )
+class flat_dict_to_nested(unittest.TestCase):
+
+    def test(self):
+        flat = {
+            'root.key1': '1',
+            'root.key2': '2',
+            'root.sub1.key1': '1.1',
+            'root.sub1.key2': '1.2',
+        }
+        self.assertEqual(
+            utils.flat_dict_to_nested(flat),
+            {
+                'root': {
+                    'key1': '1',
+                    'key2': '2',
+                    'sub1': {
+                        'key1': '1.1',
+                        'key2': '1.2',
+                    },
+                },
+            },
+        )
 
 
 class ToolTest(unittest.TestCase):
@@ -80,15 +80,16 @@ class FullTest(ToolTest):
         )
 
         # Validate input parameters without default values
+        self.assertEqual(test_inputs['section_1.noname'], 'false')
         for key in (
-            'text',
-            'integer',
-            'float',
-            'color',
-            'hidden',
-            'section_1.text',
+            'text_without_default',
+            'integer_without_default',
+            'float_without_default',
+            'color_without_default',
+            'hidden_without_default',
+            'section_1.text_without_default',
         ):
-            self.assertIsNone(test_inputs[f'{key}_without_default'], None)
+            self.assertIsNone(test_inputs[key], None)
 
         # Validate input parameters with default values
         self.assertEqual(test_inputs['text_with_default'], 'default')
@@ -100,10 +101,12 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'default')
         self.assertEqual(test_inputs['select_1'], 'default')
         self.assertEqual(test_inputs['section_1.text_with_default'], 'section_default')
+        self.assertNotIn('section_1', test_inputs)
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_1'], 'value_1')
         self.assertEqual(test_inputs['cond.text_2'], 'value_2')
+        self.assertNotIn('cond', test_inputs)
         self.assertNotIn('cond.text_0', test_inputs)
 
         # Validate repeats
@@ -151,10 +154,13 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['select_1'], 'other')
         self.assertEqual(test_inputs['section_1.text_with_default'], 'section_override')
         self.assertEqual(test_inputs['section_1.text_without_default'], 'section_override')
+        self.assertEqual(test_inputs['section_1.noname'], 'true')
+        self.assertNotIn('section_1', test_inputs)
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_0'], 'override')
         self.assertEqual(test_inputs['cond.text_1'], 'value_3')
+        self.assertNotIn('cond', test_inputs)
         self.assertNotIn('cond.text_2', test_inputs)
 
         # Validate repeats

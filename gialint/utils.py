@@ -10,10 +10,12 @@ def _list_parents(node, include_self=False, stop_at=('inputs', 'test', 'repeat')
 
 
 def get_full_name(node):
-    tokens = [
-        p_name for p in _list_parents(node, include_self=True)
-        if (p_name := p.get('name'))
-    ]
+    tokens = list()
+    for p in _list_parents(node, include_self=True):
+        if (p_name := p.get('name')):
+            tokens.append(p_name)
+        elif len(tokens) == 0 and (p_argument := p.get('argument')):
+            tokens.append(p_argument.removeprefix('--'))
     return '.'.join(tokens[::-1])
 
 
@@ -135,16 +137,16 @@ def get_base_namespace(tool_xml_root):
     return ns
 
 
-#def flat_dict_to_nested(flat_dict):
-#    root = dict()
-#    for key, value in flat_dict.items():
-#        path = key.split('.')
-#
-#        # Find/create the parent `dict` of where `value` must go
-#        current = root
-#        for token in path[:-1]:
-#            current = current.setdefault(token, dict())
-#
-#        # Put `value` into the hierarchy
-#        current[path[-1]] = value
-#    return root
+def flat_dict_to_nested(flat_dict):
+    root = dict()
+    for key, value in flat_dict.items():
+        path = key.split('.')
+
+        # Find/create the parent `dict` of where `value` must go
+        current = root
+        for token in path[:-1]:
+            current = current.setdefault(token, dict())
+
+        # Put `value` into the hierarchy
+        current[path[-1]] = value
+    return root
