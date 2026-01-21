@@ -82,6 +82,7 @@
             echo "$input1.ext"
             echo "$input1.extension"
             echo "$output1"
+            echo "$output1.files_path"
 
             #for $input in $input2
                 echo '$input'

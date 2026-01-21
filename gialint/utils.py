@@ -185,6 +185,18 @@ def list_tests(tool_xml_root):
     yield from tool_xml_root.findall('./tests/test')
 
 
+class Output:
+
+    def __init__(self, name: str):
+        self._name = name
+
+    def __str__(self) -> str:
+        return self._name
+
+    def files_path(self) -> str:
+        return f'${self._name}.files_path'
+
+
 def get_base_namespace(tool_xml_root):
     ns = {
         '__tool_directory__': '$__tool_directory__',
@@ -195,7 +207,7 @@ def get_base_namespace(tool_xml_root):
             ns[name] = f'${name}'
     for output in tool_xml_root.findall('./outputs/data'):
         if (name := output.attrib.get('name')):
-            ns[name] = f'${name}'
+            ns[name] = Output(name)
     return ns
 
 
