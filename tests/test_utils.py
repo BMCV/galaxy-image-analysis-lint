@@ -62,7 +62,7 @@ class FullTest(ToolTest):
             'float',
             'color',
             'hidden',
-            'sect.text',
+            'section_1.text',
         ):
             self.assertIsNone(test_inputs[f'{key}_without_default'], None)
 
@@ -75,12 +75,37 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['color_with_default'], '#ff0000')
         self.assertEqual(test_inputs['hidden_with_default'], 'default')
         self.assertEqual(test_inputs['select_1'], 'default')
-        self.assertEqual(test_inputs['sect.text_with_default'], 'sect_default')
+        self.assertEqual(test_inputs['section_1.text_with_default'], 'section_default')
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_1'], 'value_1')
         self.assertEqual(test_inputs['cond.text_2'], 'value_2')
         self.assertNotIn('cond.text_0', test_inputs)
+
+        # Validate repeats
+        self.assertEqual(
+            test_inputs['repeat_1'],
+            [
+                dict(repeat_integer_with_default=1, repeat_integer_without_default=None),
+                dict(repeat_integer_with_default=2, repeat_integer_without_default=None),
+            ],
+        )
+        self.assertEqual(
+            test_inputs['repeat_2'],
+            [
+                dict(repeat_integer_with_default=3, repeat_integer_without_default=None),
+            ],
+        )
+        self.assertEqual(
+            [
+                key for key in test_inputs
+                if key.startswith('repeat_')
+            ],
+            [
+                'repeat_1',
+                'repeat_2',
+            ],
+        )
 
     def test_get_test_inputs2(self):
         test_inputs = (
@@ -100,10 +125,35 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'override')
         self.assertEqual(test_inputs['hidden_without_default'], 'override')
         self.assertEqual(test_inputs['select_1'], 'other')
-        self.assertEqual(test_inputs['sect.text_with_default'], 'sect_override')
-        self.assertEqual(test_inputs['sect.text_without_default'], 'sect_override')
+        self.assertEqual(test_inputs['section_1.text_with_default'], 'section_override')
+        self.assertEqual(test_inputs['section_1.text_without_default'], 'section_override')
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_0'], 'override')
         self.assertEqual(test_inputs['cond.text_1'], 'value_3')
         self.assertNotIn('cond.text_2', test_inputs)
+
+        # Validate repeats
+        self.assertEqual(
+            test_inputs['repeat_1'],
+            [
+                dict(repeat_integer_with_default=10, repeat_integer_without_default=11),
+            ],
+        )
+        self.assertEqual(
+            test_inputs['repeat_2'],
+            [
+                dict(repeat_integer_with_default=20, repeat_integer_without_default=21),
+                dict(repeat_integer_with_default=30, repeat_integer_without_default=31),
+            ],
+        )
+        self.assertEqual(
+            [
+                key for key in test_inputs
+                if key.startswith('repeat_')
+            ],
+            [
+                'repeat_1',
+                'repeat_2',
+            ],
+        )

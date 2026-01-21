@@ -24,8 +24,8 @@
             <option value="other"/>
         </param>
 
-        <section name="sect">
-            <param name="text_with_default" type="text" value="sect_default"/>
+        <section name="section_1">
+            <param name="text_with_default" type="text" value="section_default"/>
             <param name="text_without_default" type="text"/>
         </section>
 
@@ -43,6 +43,20 @@
                 <param name="text_1" type="text" value="value_3"/>
             </when>
         </conditional>
+
+        <repeat name="repeat_1">
+            <param name="repeat_integer_with_default" type="integer" value="1"/>
+            <param name="repeat_integer_without_default" type="integer"/>
+        </repeat>
+        <repeat name="repeat_1">
+            <param name="repeat_integer_with_default" type="integer" value="2"/>
+            <param name="repeat_integer_without_default" type="integer"/>
+        </repeat>
+
+        <repeat name="repeat_2">
+            <param name="repeat_integer_with_default" type="integer" value="3"/>
+            <param name="repeat_integer_without_default" type="integer"/>
+        </repeat>
 
     </inputs>
     <tests>
@@ -72,15 +86,29 @@
 
             <param name="select_1" value="other"/>
 
-            <section name="sect">
-                <param name="text_with_default" value="sect_override"/>
-                <param name="text_without_default" value="sect_override"/>
+            <section name="section_1">
+                <param name="text_with_default" value="section_override"/>
+                <param name="text_without_default" value="section_override"/>
             </section>
 
             <conditional name="cond">
                 <param name="cond_select" value="other"/>
                 <param name="text_0" value="override"/>
             </conditional>
+
+            <repeat name="repeat_1">
+                <param name="repeat_integer_with_default" value="10"/>
+                <param name="repeat_integer_without_default" value="11"/>
+            </repeat>
+
+            <repeat name="repeat_2">
+                <param name="repeat_integer_with_default" value="20"/>
+                <param name="repeat_integer_without_default" value="21"/>
+            </repeat>
+            <repeat name="repeat_2">
+                <param name="repeat_integer_with_default" value="30"/>
+                <param name="repeat_integer_without_default" value="31"/>
+            </repeat>
         </test>
 
     </tests>
