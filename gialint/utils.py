@@ -191,7 +191,7 @@ class Output:
         self._name = name
 
     def __str__(self) -> str:
-        return self._name
+        return f'${self._name}'
 
     def files_path(self) -> str:
         return f'${self._name}.files_path'
