@@ -8,12 +8,15 @@
     <test-tool>
         <inputs>
             <param name="input1" type="text" value="ok"/>
+            <section name="sect">
+                <param name="input2" type="integer" value="0"/>
+            </section>
         </inputs>
         <configfiles>
             <configfile><![CDATA[
                 {
                     #if $input1 == "ok"
-                        "key": "value"
+                        "key": $sect.input2
                     #end if
                 }
             ]]></configfile>
@@ -64,7 +67,7 @@
             <test/>
         </tests>
     </test-tool>
-    <test-tool lines_with_volations="72">
+    <test-tool lines_with_volations="75">
         <inputs>
             <param name="input1" type="text" value="ok"/>
         </inputs>
