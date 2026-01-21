@@ -68,8 +68,8 @@ class FullTest(ToolTest):
 
         # Validate input parameters with default values
         self.assertEqual(test_inputs['text_with_default'], 'default')
-        self.assertEqual(test_inputs['integer_with_default'], 1)
-        self.assertEqual(test_inputs['float_with_default'], 1.0)
+        self.assertEqual(test_inputs['integer_with_default'], '1')
+        self.assertEqual(test_inputs['float_with_default'], '1')
         self.assertEqual(test_inputs['boolean_1'], 'true')
         self.assertEqual(test_inputs['boolean_2'], 'FALSE')
         self.assertEqual(test_inputs['color_with_default'], '#ff0000')
@@ -86,14 +86,14 @@ class FullTest(ToolTest):
         self.assertEqual(
             test_inputs['repeat_1'],
             [
-                dict(repeat_integer_with_default=1, repeat_integer_without_default=None),
-                dict(repeat_integer_with_default=2, repeat_integer_without_default=None),
+                dict(repeat_integer_with_default='1', repeat_integer_without_default=None),
+                dict(repeat_integer_with_default='2', repeat_integer_without_default=None),
             ],
         )
         self.assertEqual(
             test_inputs['repeat_2'],
             [
-                dict(repeat_integer_with_default=3, repeat_integer_without_default=None),
+                dict(repeat_integer_with_default='3', repeat_integer_without_default=None),
             ],
         )
         self.assertEqual(
@@ -114,10 +114,10 @@ class FullTest(ToolTest):
 
         self.assertEqual(test_inputs['text_with_default'], 'override')
         self.assertEqual(test_inputs['text_without_default'], 'override')
-        self.assertEqual(test_inputs['integer_with_default'], 2)
-        self.assertEqual(test_inputs['integer_without_default'], 2)
-        self.assertEqual(test_inputs['float_with_default'], 2.0)
-        self.assertEqual(test_inputs['float_without_default'], 2.0)
+        self.assertEqual(test_inputs['integer_with_default'], '2')
+        self.assertEqual(test_inputs['integer_without_default'], '2')
+        self.assertEqual(test_inputs['float_with_default'], '2')
+        self.assertEqual(test_inputs['float_without_default'], '2')
         self.assertEqual(test_inputs['boolean_1'], 'false')
         self.assertEqual(test_inputs['boolean_2'], 'TRUE')
         self.assertEqual(test_inputs['color_with_default'], '#00ff00')
@@ -137,14 +137,14 @@ class FullTest(ToolTest):
         self.assertEqual(
             test_inputs['repeat_1'],
             [
-                dict(repeat_integer_with_default=10, repeat_integer_without_default=11),
+                dict(repeat_integer_with_default='10', repeat_integer_without_default='11'),
             ],
         )
         self.assertEqual(
             test_inputs['repeat_2'],
             [
-                dict(repeat_integer_with_default=20, repeat_integer_without_default=21),
-                dict(repeat_integer_with_default=30, repeat_integer_without_default=31),
+                dict(repeat_integer_with_default='20', repeat_integer_without_default='21'),
+                dict(repeat_integer_with_default='30', repeat_integer_without_default='31'),
             ],
         )
         self.assertEqual(

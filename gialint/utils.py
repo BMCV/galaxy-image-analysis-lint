@@ -1,15 +1,5 @@
 from lxml import etree
 
-_param_types = {
-    'text': str,
-    'integer': int,
-    'float': float,
-    'color': str,
-    'hidden': str,
-    'select': str,
-    'data': str,
-}
-
 
 def _list_parents(node, include_self=False, stop_at=('inputs', 'test', 'repeat')):
     current = node
@@ -108,7 +98,7 @@ def get_test_inputs(inputs_root, test_root):
             inputs[full_node_name] = default_options[0].attrib.get('value')
 
         # Register type converter
-        input_types[full_node_name] = converter or _param_types.get(param_type)
+        input_types[full_node_name] = converter or str
 
         # Register the input for a conditional
         if node.getparent().tag == 'conditional':
