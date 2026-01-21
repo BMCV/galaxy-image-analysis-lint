@@ -6,31 +6,46 @@
         </command>
     </test-tool>
     <test-tool>
+        <!--
+        Parsing `configfile2` encounters a `NotFound` error but this check should pass,
+        because there is a dedicated code/check for such errors.
+        -->
         <command><![CDATA[
-            echo "$configfile1"
+            echo "$configfile1" "$configfile2"
         ]]></command>
         <configfiles>
             <configfile name="configfile1"><![CDATA[
                 {
-                    "key": $input1
+                    "int": $int,
+                    "data": "$data"
                 }
+            ]]></configfile>
+            <configfile name="configfile2"><![CDATA[
+                $not_found
             ]]></configfile>
         </configfiles>
         <inputs>
-            <param name="input1" type="integer" value="0"/>
+            <param name="int" type="integer" value="0"/>
+            <param name="data" type="data"/>
         </inputs>
         <tests>
             <test>
                 <!--
                     GIA204:
-                    echo "$configfile1"
+                    echo "$configfile1" "$configfile2"
                 -->
                 <!--
                     GIA204: configfile1
                     {
-                        "key": 0
+                        "int": 0,
+                        "data": "filename"
                     }
                 -->
+                <!--
+                    GIA204: configfile2
+                    build fails and cannot be checked
+                -->
+                <param name="data" value="filename"/>
             </test>
         </tests>
     </test-tool>
@@ -58,7 +73,7 @@
             </test>
         </tests>
     </test-tool>
-    <test-tool lines_with_volations="71">
+    <test-tool lines_with_volations="86">
         <!-- Check must fail because annotation for `configfile1` is spurious -->
         <command><![CDATA[
             echo "foo"

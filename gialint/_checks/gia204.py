@@ -83,9 +83,10 @@ def check(tool_xml_root):
                     try:
                         result = str(Template(template.text, searchList=namespace))
                     except (ParseError, NameMapper.NotFound):
-                        pass  # Cheetah compile errors are handled by dedicated checks
+                        continue  # Cheetah compile errors are handled by dedicated checks
 
                     # Validate that `actual` corresponds to `header`
                     actual = _list_nonempty_lines(textwrap.dedent(result))
                     if actual != header:
+                        print(actual)
                         yield comment.sourceline

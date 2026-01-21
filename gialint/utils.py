@@ -7,6 +7,7 @@ _param_types = {
     'color': str,
     'hidden': str,
     'select': str,
+    'data': str,
 }
 
 
