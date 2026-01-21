@@ -1,0 +1,3 @@
+'**/galaxy-image-analysis/tools/rfove/rfove.xml':
+  ignore:
+    - GIA202  # there is actually a bug in there

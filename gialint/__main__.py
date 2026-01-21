@@ -3,6 +3,7 @@ import pathlib
 import sys
 
 from galaxy.util import xml_macros
+import yaml
 
 from gialint._context import Context
 
@@ -18,7 +19,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument('--tool_path', required=False, type=str)
 parser.add_argument('--ignore', action='append', type=str, default=list())
 parser.add_argument('--details_indent', type=int, default=4)
+parser.add_argument('--config', type=str, default='.gialint.yml')
 args = parser.parse_args()
+
+
+if args.config:
+    with open(args.config, 'r') as fp:
+        config = yaml.safe_load(fp)
+else:
+    config = dict()
 
 
 def list_tool_xml(path):
@@ -31,8 +40,23 @@ def list_tool_xml(path):
 
 def list_violations(tool_xml_path, ignore_codes):
     for code in list_codes():
+
+        # Skip the check if it was passed via `--ignore`
         if code in ignore_codes:
             continue
+
+        # Skip the check if it was listed in the `--config` file
+        skip = False
+        for pattern, c in config.items():
+            if pathlib.Path(tool_xml_path).match(pattern) and (
+                code in filter(lambda s: s.strip(), c.get('ignore', list()))
+            ):
+                skip = True
+                break
+        if skip:
+            continue
+
+        # Run the checks
         for info in check(code, tree.getroot()):
             if isinstance(info, int):
                 info = dict(line=info)
