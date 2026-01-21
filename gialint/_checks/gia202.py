@@ -8,7 +8,16 @@ from ..utils import (
 )
 
 
+def _get_base_namespace(tool_xml_root):
+    ns = dict()
+    for configfile in tool_xml_root.findall('./configfiles/configfile'):
+        if (name := configfile.attrib.get('name')):
+            ns[name] = name
+    return ns
+
+
 def check(tool_xml_root):
+    base_namespace = _get_base_namespace(tool_xml_root)
     for path in (
         'command',
         'configfiles/configfile',
@@ -26,7 +35,7 @@ def check(tool_xml_root):
             if (inputs_xml_list := tool_xml_root.findall(f'./inputs')):
                 inputs_xml = inputs_xml_list[0]
                 for test_xml in list_tests(tool_xml_root):
-                    namespace = get_test_inputs(inputs_xml, test_xml)
+                    namespace = base_namespace | get_test_inputs(inputs_xml, test_xml)
                     try:
                         str(Template(template.text, searchList=namespace))
                     except NameMapper.NotFound:

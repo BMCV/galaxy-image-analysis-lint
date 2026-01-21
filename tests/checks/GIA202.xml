@@ -6,13 +6,15 @@
         </command>
     </test-tool>
     <test-tool>
+        <!-- Command uses undefined token, but there is no test defined that could supply tokens -->
         <command><![CDATA[
             #if $input1 == "ok"
                 echo "ok"
             #end if
         ]]></command>
     </test-tool>
-    <test-tool lines_with_volations="16">
+    <test-tool lines_with_volations="18">
+        <!-- Command yields a `ParseError` -->
         <command><![CDATA[
             #if $input1 == "ok"
                 echo "ok"
@@ -24,6 +26,7 @@
         </configfiles>
     </test-tool>
     <test-tool>
+        <!-- Configfile uses undefined token, but there is no test defined that could supply tokens -->
         <configfiles>
             <configfile><![CDATA[
                 #if $input1 == "ok"
@@ -32,7 +35,8 @@
             ]]></configfile>
         </configfiles>
     </test-tool>
-    <test-tool lines_with_volations="37">
+    <test-tool lines_with_volations="41">
+        <!-- Configfile yields a `ParseError` -->
         <configfiles>
             <configfile><![CDATA[
                 #if $input1 == "ok"
@@ -41,13 +45,30 @@
             ]]></configfile>
         </configfiles>
     </test-tool>
-    <test-tool lines_with_volations="46">
-        <inputs name="input1" type="text" value="ok"/>
+    <test-tool lines_with_volations="50">
+        <!-- Command uses undefined token -->
         <command><![CDATA[
-            #if $input1 == "ok"
-                echo "ok"
-            #end if
+            echo "$input1"
         ]]></command>
+        <inputs/>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo "$configfile1"
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+                #if $input1 == "ok"
+                    key: value
+                #end if
+            ]]></configfile>
+        </configfiles>
+        <inputs>
+            <param name="input1" type="text" value="ok"/>
+        </inputs>
         <tests>
             <test/>
         </tests>
