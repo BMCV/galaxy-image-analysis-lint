@@ -19,7 +19,10 @@ def _create_test(code, xml_tests_filepath, xml_test):
         return ', '.join(f'{line}' for line in lines_list) or 'none'
 
     def test(testcase):
-        actual_lines_with_violations = list(gialint.check(code, xml_test))
+        check_results = list(gialint.check(code, xml_test))
+        actual_lines_with_violations = [
+            info if isinstance(info, int) else info['line'] for info in check_results
+        ]
         if actual_lines_with_violations != expected_lines_with_violations:
             testcase.fail(
                 f'{xml_tests_filepath}:{xml_test.sourceline}\n'

@@ -7,19 +7,12 @@ from Cheetah.Parser import ParseError
 from lxml import etree
 
 from ..utils import (
+    get_base_namespace,
     get_test_inputs,
     list_tests,
 )
 
 prefix = pathlib.Path(__file__).stem.upper() + ':'  # GIA204:
-
-
-def _get_base_namespace(tool_xml_root):
-    ns = dict()
-    for configfile in tool_xml_root.findall('./configfiles/configfile'):
-        if (name := configfile.attrib.get('name')):
-            ns[name] = f'${name}'
-    return ns
 
 
 def _xpath_or_none(root, xpath: str):
@@ -60,7 +53,7 @@ def check(tool_xml_root):
                 yield comment.sourceline
 
     # Build and validate the template for each test (with the corresponding namespace)
-    base_namespace = _get_base_namespace(tool_xml_root)
+    base_namespace = get_base_namespace(tool_xml_root)
     for template_id, template in templates.items():
 
         # Find tests that have templates defined for the check

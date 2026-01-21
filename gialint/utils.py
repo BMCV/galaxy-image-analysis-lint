@@ -122,3 +122,29 @@ def get_test_inputs(inputs_root, test_root):
 
 def list_tests(tool_xml_root):
     yield from tool_xml_root.findall('./tests/test')
+
+
+def get_base_namespace(tool_xml_root):
+    ns = {
+        '__tool_directory__': '$__tool_directory__',
+        'input': None,  # shadow the built-in `input` because it causes hang-ups
+    }
+    for configfile in tool_xml_root.findall('./configfiles/configfile'):
+        if (name := configfile.attrib.get('name')):
+            ns[name] = f'${name}'
+    return ns
+
+
+#def flat_dict_to_nested(flat_dict):
+#    root = dict()
+#    for key, value in flat_dict.items():
+#        path = key.split('.')
+#
+#        # Find/create the parent `dict` of where `value` must go
+#        current = root
+#        for token in path[:-1]:
+#            current = current.setdefault(token, dict())
+#
+#        # Put `value` into the hierarchy
+#        current[path[-1]] = value
+#    return root

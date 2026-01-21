@@ -3,21 +3,14 @@ from Cheetah.Template import Template
 from Cheetah.Parser import ParseError
 
 from ..utils import (
+    get_base_namespace,
     get_test_inputs,
     list_tests,
 )
 
 
-def _get_base_namespace(tool_xml_root):
-    ns = dict()
-    for configfile in tool_xml_root.findall('./configfiles/configfile'):
-        if (name := configfile.attrib.get('name')):
-            ns[name] = f'${name}'
-    return ns
-
-
 def check(tool_xml_root):
-    base_namespace = _get_base_namespace(tool_xml_root)
+    base_namespace = get_base_namespace(tool_xml_root)
     for path in (
         'command',
         'configfiles/configfile',
@@ -41,7 +34,10 @@ def check(tool_xml_root):
                     namespace = base_namespace | get_test_inputs(inputs_xml, test_xml)
                     try:
                         str(Template(template.text, searchList=namespace))
-                    except NameMapper.NotFound as error:
+                    except (
+                        NameMapper.NotFound,
+                        TypeError,
+                    ) as error:
                         yield dict(
                             line=template.sourceline,
                             details=error,
