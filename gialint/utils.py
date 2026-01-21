@@ -39,17 +39,44 @@ def _get_node_by_name(full_name, root_xml, multiple: bool = False):
 
 class InputDataset:
 
+    class Metadata:
+        pass
+
+    class ZarrMetadata(Metadata):
+        def store_root(self):
+            return 'store_root'
+
     def __init__(self, filepath: str):
         self._filepath = filepath
 
     def __str__(self) -> str:
         return self._filepath
 
-    def extension(self):
-        return pathlib.Path(self._filepath).suffix
+    def extension(self) -> str:
+        name = pathlib.Path(self._filepath).name
+        return '.'.join(name.split('.')[1:]).lower()
 
-    def ext(self):
-        return self.extension
+    def ext(self) -> str:
+        return self.extension()
+
+    def name(self) -> str:
+        return pathlib.Path(self._filepath).name
+
+    def id(self) -> str:
+        return str(hash(self._filepath))
+
+    def element_identifier(self) -> str:
+        return self.id()
+
+    def extra_files_path(self) -> str:
+        return self._filepath
+
+    def metadata(self):
+        match self.extension():
+            case 'zarr' | 'ome_zarr':
+                return self.ZarrMetadata()
+            case _:
+                return self.Metadata()
 
     @staticmethod
     def converter(multiple: bool = False):

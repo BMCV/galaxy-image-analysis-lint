@@ -10,6 +10,8 @@ tools_root_path = pathlib.Path(__file__).parent / 'tools'
 
 class flat_dict_to_nested(unittest.TestCase):
 
+    # TODO: Add tests for `repeat` lists
+
     def test(self):
         flat = {
             'root.key1': '1',
@@ -29,6 +31,41 @@ class flat_dict_to_nested(unittest.TestCase):
                     },
                 },
             },
+        )
+
+
+class InputDataset(unittest.TestCase):
+
+    def setUp(self):
+        self.filepath = '/path/filename.ext1.ext2'
+        self.dataset = utils.InputDataset(self.filepath)
+
+    def test_ext(self):
+        self.assertEqual(self.dataset.ext(), 'ext1.ext2')
+
+    def test_extension(self):
+        self.assertEqual(self.dataset.extension(), 'ext1.ext2')
+
+    def test__str__(self):
+        self.assertEqual(str(self.dataset), self.filepath)
+
+    def test_name(self):
+        self.assertEqual(self.dataset.name(), 'filename.ext1.ext2')
+
+    def test_id(self):
+        self.assertEqual(self.dataset.id(), str(hash(self.filepath)))
+
+    def test_element_identifier(self):
+        self.assertEqual(self.dataset.element_identifier(), str(hash(self.filepath)))
+
+    def test_extra_files_path(self):
+        self.assertEqual(self.dataset.extra_files_path(), self.filepath)
+
+    def test_metadata(self):
+        self.assertFalse(hasattr(self.dataset.metadata(), 'store_root'))
+        self.assertEqual(
+            utils.InputDataset('filename.zarr').metadata().store_root(),
+            'store_root',
         )
 
 
