@@ -17,7 +17,7 @@ def get_full_name(node):
         if (p_name := p.get('name')):
             tokens.append(p_name)
         elif len(tokens) == 0 and (p_argument := p.get('argument')):
-            tokens.append(p_argument.removeprefix('--'))
+            tokens.append(p_argument.removeprefix('--').replace('-', '_'))
     return '.'.join(tokens[::-1])
 
 

@@ -117,7 +117,7 @@ class FullTest(ToolTest):
         )
 
         # Validate input parameters without default values
-        self.assertEqual(test_inputs['section_1.noname'], 'false')
+        self.assertEqual(test_inputs['section_1.no_name'], 'false')
         for key in (
             'text_without_default',
             'integer_without_default',
@@ -191,7 +191,7 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['select_1'], 'other')
         self.assertEqual(test_inputs['section_1.text_with_default'], 'section_override')
         self.assertEqual(test_inputs['section_1.text_without_default'], 'section_override')
-        self.assertEqual(test_inputs['section_1.noname'], 'true')
+        self.assertEqual(test_inputs['section_1.no_name'], 'true')
         self.assertNotIn('section_1', test_inputs)
 
         # Validate conditionals

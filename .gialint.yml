@@ -1,3 +1,7 @@
 '**/galaxy-image-analysis/tools/rfove/rfove.xml':
   ignore:
-    - GIA202  # there is actually a bug in there
+    - GIA202  # bug in tool XML
+
+'**/galaxy-image-analysis/tools/2d_simple_filter/filter.xml':
+  ignore:
+    - GIA201  # bug in tool XML

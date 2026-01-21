@@ -27,7 +27,7 @@
         <section name="section_1">
             <param name="text_with_default" type="text" value="section_default"/>
             <param name="text_without_default" type="text"/>
-            <param argument="--noname" type="boolean"/>
+            <param argument="--no-name" type="boolean"/>
         </section>
 
         <conditional name="cond">
@@ -90,7 +90,7 @@
             <section name="section_1">
                 <param name="text_with_default" value="section_override"/>
                 <param name="text_without_default" value="section_override"/>
-                <param name="noname" value="true"/>
+                <param name="no_name" value="true"/>
             </section>
 
             <conditional name="cond">
