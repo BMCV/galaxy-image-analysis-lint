@@ -77,7 +77,7 @@ def get_test_inputs(inputs_xml, test_xml):
         # Read test value
         if (
             test_param := test_xml.findall(
-                './' + '/'.join(f'param[@name="{name}"]' for name in full_param_name.split('.'))
+                './' + '/'.join(f'*[@name="{name}"]' for name in full_param_name.split('.'))
             )
         ):
             inputs[full_param_name] = test_param[0].attrib.get('value')

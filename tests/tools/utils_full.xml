@@ -66,6 +66,11 @@
             <param name="hidden_without_default" value="override"/>
 
             <param name="select_1" value="other"/>
+
+            <conditional name="cond">
+                <param name="cond_select" value="other"/>
+                <param name="text_0" value="override"/>
+            </conditional>
         </test>
 
     </tests>

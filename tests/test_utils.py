@@ -98,3 +98,8 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'override')
         self.assertEqual(test_inputs['hidden_without_default'], 'override')
         self.assertEqual(test_inputs['select_1'], 'other')
+
+        # Validate conditionals
+        self.assertEqual(test_inputs['cond.text_0'], 'override')
+        self.assertEqual(test_inputs['cond.text_1'], 'value_3')
+        self.assertNotIn('cond.text_2', test_inputs)
