@@ -16,8 +16,10 @@ setup(
     url='https://kostrykin.com',
     license='MIT',
     packages=['gialint', 'gialint._checks'],
-    python_requires='>=3.11',
+    python_requires='>=3.10',
     install_requires=[
         'galaxy-util>=25.0',
+        'lxml>=6.0.2',
+        'Cheetah3>=3.2.6.post1',
     ],
 )
