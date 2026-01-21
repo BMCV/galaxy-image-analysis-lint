@@ -17,6 +17,7 @@ gialint_root_path = pathlib.Path(__file__).parent
 parser = argparse.ArgumentParser()
 parser.add_argument('--tool_path', required=False, type=str)
 parser.add_argument('--ignore', action='append', type=str, default=list())
+parser.add_argument('--details_indent', type=int, default=4)
 args = parser.parse_args()
 
 
@@ -32,8 +33,10 @@ def list_violations(tool_xml_path, ignore_codes):
     for code in list_codes():
         if code in ignore_codes:
             continue
-        for line in check(code, tree.getroot()):
-            yield Context(code, getattr(codes, code), tool_xml_path, line)
+        for info in check(code, tree.getroot()):
+            if isinstance(info, int):
+                info = dict(line=info)
+            yield Context(code, getattr(codes, code), tool_xml_path, **info)
 
 
 working_path = pathlib.Path(args.tool_path) or pathlib.Path.cwd()
@@ -48,8 +51,20 @@ for tool_xml_path in list_tool_xml(working_path):
 
         if violations:
             print('FAILED')
+            print()
             for context in violations:
                 print(str(context), file=sys.stderr)
+                if context.details:
+                    print(
+                        '\n'.join(
+                            (
+                                ' ' * args.details_indent + line
+                                for line in str(context.details).splitlines()
+                            ),
+                        ),
+                        file=sys.stderr,
+                    )
+            print()
         else:
             print('OK')
         violations_count += len(violations)

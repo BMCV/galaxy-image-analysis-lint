@@ -27,8 +27,11 @@ def check(tool_xml_root):
             # Test build the template
             try:
                 Template(template.text, searchList=dict())
-            except ParseError:
-                yield template.sourceline
+            except ParseError as error:
+                yield dict(
+                    line=template.sourceline,
+                    details=error,
+                )
                 continue
 
             # Build the template for each test (with the corresponding namespace)
@@ -38,5 +41,8 @@ def check(tool_xml_root):
                     namespace = base_namespace | get_test_inputs(inputs_xml, test_xml)
                     try:
                         str(Template(template.text, searchList=namespace))
-                    except NameMapper.NotFound:
-                        yield template.sourceline
+                    except NameMapper.NotFound as error:
+                        yield dict(
+                            line=template.sourceline,
+                            details=error,
+                        )

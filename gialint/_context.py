@@ -1,11 +1,12 @@
 class Context(BaseException):
 
-    def __init__(self, code, description, filepath, line):
+    def __init__(self, code, description, filepath, line, details=None):
         super().__init__(description)
         self.code = code
         self.description = description
         self.filepath = filepath
         self.line = line
+        self.details = details
 
     def __str__(self):
         where = str(self.filepath)
