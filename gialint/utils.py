@@ -153,6 +153,9 @@ def get_base_namespace(tool_xml_root):
     for configfile in tool_xml_root.findall('./configfiles/configfile'):
         if (name := configfile.attrib.get('name')):
             ns[name] = f'${name}'
+    for output in tool_xml_root.findall('./outputs/data'):
+        if (name := output.attrib.get('name')):
+            ns[name] = f'${name}'
     return ns
 
 

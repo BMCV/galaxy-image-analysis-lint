@@ -78,10 +78,14 @@
             echo "$input1"
             echo "$input1.ext"
             echo "$input1.extension"
+            echo "$output1"
         ]]></command>
         <inputs>
             <param name="input1" type="data"/>
         </inputs>
+        <outputs>
+            <data name="output1"/>
+        </outputs>
         <tests>
             <test>
                 <param name="input1" value="input.tiff"/>
