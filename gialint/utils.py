@@ -60,8 +60,11 @@ def get_test_inputs(inputs_root, test_root):
         for container in _list_parents(node):
             if container.tag == 'when' and container.getparent().tag == 'conditional':
                 conditional_name = get_full_name(container.getparent())
-                if conditional_name not in conditional_inputs or (
-                    inputs[conditional_inputs[conditional_name]] != container.attrib.get('value')
+                if (
+                    conditional_name not in conditional_inputs or
+                    conditional_inputs[conditional_name] not in inputs or (
+                        inputs[conditional_inputs[conditional_name]] != container.attrib.get('value')
+                    )
                 ):
                     is_active = False
                     break
@@ -94,7 +97,7 @@ def get_test_inputs(inputs_root, test_root):
             converter = _create_boolean_converter(node)
 
         # Read the value from children elements
-        if (default_options := node.findall('./option[@selected="true"]')):
+        if (default_options := node.xpath('./option[translate(@selected, "TRUE", "true")="true"]')):
             inputs[full_node_name] = default_options[0].attrib.get('value')
 
         # Register type converter

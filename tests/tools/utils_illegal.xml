@@ -3,7 +3,16 @@
 
         <param name="llegal_type" type="illegal"/>
 
-        <conditional name="illegal_conditional">
+        <conditional name="illegal_conditional1">
+            <when value="">
+                <param name="param" type="text"/>
+            </when>
+        </conditional>
+
+        <conditional name="illegal_conditional2">
+            <param name="illegal_select" type="select">
+                <option value="1">not selected</option>
+            </param>
             <when value="">
                 <param name="param" type="text"/>
             </when>
