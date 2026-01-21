@@ -1,0 +1,75 @@
+<tests>
+    <test-tool>
+    </test-tool>
+    <test-tool>
+        <command>
+        </command>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo "$configfile1"
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+                {
+                    "key": $input1
+                }
+            ]]></configfile>
+        </configfiles>
+        <inputs>
+            <param name="input1" type="integer" value="0"/>
+        </inputs>
+        <tests>
+            <test>
+                <!--
+                    GIA204:
+                    echo "$configfile1"
+                -->
+                <!--
+                    GIA204: configfile1
+                    {
+                        "key": 0
+                    }
+                -->
+            </test>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo "foo"
+        ]]></command>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo "foo"
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+            ]]></configfile>
+        </configfiles>
+        <tests>
+            <test>
+                <!--
+                GIA204: configfile1
+                -->
+            </test>
+        </tests>
+    </test-tool>
+    <test-tool lines_with_volations="71">
+        <!-- Check must fail because annotation for `configfile1` is spurious -->
+        <command><![CDATA[
+            echo "foo"
+        ]]></command>
+        <tests>
+            <test>
+                <!--
+                GIA204: configfile1
+                spurious
+                -->
+            </test>
+        </tests>
+    </test-tool>
+</tests>

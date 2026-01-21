@@ -12,7 +12,7 @@ def _get_base_namespace(tool_xml_root):
     ns = dict()
     for configfile in tool_xml_root.findall('./configfiles/configfile'):
         if (name := configfile.attrib.get('name')):
-            ns[name] = name
+            ns[name] = f'${name}'
     return ns
 
 
