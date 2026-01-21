@@ -157,6 +157,7 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['color_with_default'], '#ff0000')
         self.assertEqual(test_inputs['hidden_with_default'], 'default')
         self.assertEqual(test_inputs['select_1'], 'default')
+        self.assertEqual(test_inputs['select_2'], 'default')
         self.assertEqual(test_inputs['section_1.text_with_default'], 'section_default')
         self.assertNotIn('section_1', test_inputs)
 
@@ -209,6 +210,7 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'override')
         self.assertEqual(test_inputs['hidden_without_default'], 'override')
         self.assertEqual(test_inputs['select_1'], 'other')
+        self.assertEqual(test_inputs['select_2'], 'other')
         self.assertEqual(test_inputs['section_1.text_with_default'], 'section_override')
         self.assertEqual(test_inputs['section_1.text_without_default'], 'section_override')
         self.assertEqual(test_inputs['section_1.no_name'], 'true')

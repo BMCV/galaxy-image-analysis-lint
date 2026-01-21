@@ -31,7 +31,7 @@ def check(tool_xml_root):
             # Build the template for each test (with the corresponding namespace)
             if (inputs_xml_list := tool_xml_root.findall(f'./inputs')):
                 inputs_xml = inputs_xml_list[0]
-                for test_xml in list_tests(tool_xml_root):
+                for test_num, test_xml in enumerate(list_tests(tool_xml_root), start=1):
                     namespace = base_namespace | flat_dict_to_nested(get_test_inputs(inputs_xml, test_xml))
                     try:
                         str(Template(template.text, searchList=namespace))
@@ -41,5 +41,5 @@ def check(tool_xml_root):
                     ) as error:
                         yield dict(
                             line=template.sourceline,
-                            details=f'{error} from test in line {test_xml.sourceline}',
+                            details=f'{error} from test {test_num} (line {test_xml.sourceline})',
                         )

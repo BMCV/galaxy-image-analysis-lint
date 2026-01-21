@@ -8,4 +8,5 @@
 
 '**/galaxy-image-analysis/tools/2d_simple_filter/filter.xml':
   ignore:
-    - GIA201  # bug in tool XML
+    - GIA201  # bug in tool XML: `input.extension` should be `setup.input.extension`
+    - GIA202  # bug in tool XML: `input.extension` should be `setup.input.extension`

@@ -24,6 +24,11 @@
             <option value="other"/>
         </param>
 
+        <param name="select_2" type="select">
+            <option value="default"/>
+            <option value="other"/>
+        </param>
+
         <section name="section_1">
             <param name="text_with_default" type="text" value="section_default"/>
             <param name="text_without_default" type="text"/>
@@ -86,6 +91,7 @@
             <param name="hidden_without_default" value="override"/>
 
             <param name="select_1" value="other"/>
+            <param name="select_2" value="other"/>
 
             <section name="section_1">
                 <param name="text_with_default" value="section_override"/>

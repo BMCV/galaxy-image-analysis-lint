@@ -9,15 +9,6 @@
             </when>
         </conditional>
 
-        <conditional name="illegal_conditional2">
-            <param name="illegal_select" type="select">
-                <option value="1">not selected</option>
-            </param>
-            <when value="">
-                <param name="param" type="text"/>
-            </when>
-        </conditional>
-
     </inputs>
     <tests>
         <test/>
