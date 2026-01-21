@@ -10,14 +10,22 @@ tools_root_path = pathlib.Path(__file__).parent / 'tools'
 
 class flat_dict_to_nested(unittest.TestCase):
 
-    # TODO: Add tests for `repeat` lists
-
     def test(self):
         flat = {
             'root.key1': '1',
             'root.key2': '2',
             'root.sub1.key1': '1.1',
             'root.sub1.key2': '1.2',
+            'root.list': [
+                {
+                    'key1': 'a',
+                    'key2': 'b',
+                },
+                {
+                    'list_item_root.key1': 'c',
+                    'list_item_root.key2': 'd',
+                },
+            ],
         }
         self.assertEqual(
             utils.flat_dict_to_nested(flat),
@@ -29,6 +37,18 @@ class flat_dict_to_nested(unittest.TestCase):
                         'key1': '1.1',
                         'key2': '1.2',
                     },
+                    'list': [
+                        {
+                            'key1': 'a',
+                            'key2': 'b',
+                        },
+                        {
+                            'list_item_root': {
+                                'key1': 'c',
+                                'key2': 'd',
+                            },
+                        },
+                    ]
                 },
             },
         )

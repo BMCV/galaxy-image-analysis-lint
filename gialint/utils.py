@@ -221,6 +221,12 @@ def flat_dict_to_nested(flat_dict):
         for token in path[:-1]:
             current = current.setdefault(token, dict())
 
+        # Propagate to `value` if it is a list of dictionaries
+        if isinstance(value, list) and isinstance(value[0], dict):
+            value = [
+                flat_dict_to_nested(item) for item in value
+            ]
+
         # Put `value` into the hierarchy
         current[path[-1]] = value
     return root
