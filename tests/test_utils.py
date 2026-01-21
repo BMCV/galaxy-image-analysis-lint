@@ -62,6 +62,7 @@ class FullTest(ToolTest):
             'float',
             'color',
             'hidden',
+            'sect.text',
         ):
             self.assertIsNone(test_inputs[f'{key}_without_default'], None)
 
@@ -74,6 +75,7 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['color_with_default'], '#ff0000')
         self.assertEqual(test_inputs['hidden_with_default'], 'default')
         self.assertEqual(test_inputs['select_1'], 'default')
+        self.assertEqual(test_inputs['sect.text_with_default'], 'sect_default')
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_1'], 'value_1')
@@ -98,6 +100,8 @@ class FullTest(ToolTest):
         self.assertEqual(test_inputs['hidden_with_default'], 'override')
         self.assertEqual(test_inputs['hidden_without_default'], 'override')
         self.assertEqual(test_inputs['select_1'], 'other')
+        self.assertEqual(test_inputs['sect.text_with_default'], 'sect_override')
+        self.assertEqual(test_inputs['sect.text_without_default'], 'sect_override')
 
         # Validate conditionals
         self.assertEqual(test_inputs['cond.text_0'], 'override')

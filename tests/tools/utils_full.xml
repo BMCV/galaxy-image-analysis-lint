@@ -24,6 +24,11 @@
             <option value="other"/>
         </param>
 
+        <section name="sect">
+            <param name="text_with_default" type="text" value="sect_default"/>
+            <param name="text_without_default" type="text"/>
+        </section>
+
         <conditional name="cond">
             <param name="cond_select" type="select">
                 <option value="default" selected="true"/>
@@ -66,6 +71,11 @@
             <param name="hidden_without_default" value="override"/>
 
             <param name="select_1" value="other"/>
+
+            <section name="sect">
+                <param name="text_with_default" value="sect_override"/>
+                <param name="text_without_default" value="sect_override"/>
+            </section>
 
             <conditional name="cond">
                 <param name="cond_select" value="other"/>
