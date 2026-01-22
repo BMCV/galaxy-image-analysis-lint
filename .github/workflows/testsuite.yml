@@ -35,13 +35,13 @@ jobs:
       - name: Run flake8
         shell: bash
         run: |
-          flake8 giatools
+          flake8 gialint
           flake8 tests
 
       - name: Run isort
         shell: bash
         run: |
-          isort giatools --check-only
+          isort gialint --check-only
           isort tests --check-only
 
   run_testsuite:
