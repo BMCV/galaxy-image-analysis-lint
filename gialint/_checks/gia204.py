@@ -8,6 +8,7 @@ from Cheetah.Parser import ParseError
 from lxml import etree
 
 from ..utils import (
+    flat_dict_to_nested,
     get_base_namespace,
     get_test_inputs,
     list_tests,
@@ -76,7 +77,7 @@ def check(tool_xml_root):
                     header.pop(0)
 
                     # Build the template (with the corresponding namespace)
-                    namespace = base_namespace | get_test_inputs(inputs_xml, test_xml)
+                    namespace = base_namespace | flat_dict_to_nested(get_test_inputs(inputs_xml, test_xml))
                     try:
                         result = str(Template(template.text, searchList=namespace))
                     except (ParseError, NameMapper.NotFound):
