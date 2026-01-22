@@ -24,7 +24,7 @@ def check(tool_xml_root):
                     s = str(Template(template.text, searchList=namespace))
                     try:
                         json.loads(s)
-                    except json.JSONDecodeError as error:
+                    except json.JSONDecodeError:
                         yield dict(
                             line=template.sourceline,
                             details=(

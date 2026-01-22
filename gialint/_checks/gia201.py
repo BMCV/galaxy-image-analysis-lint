@@ -2,7 +2,6 @@ from ..utils import get_full_name
 
 
 def check(tool_xml_root):
-    zarr_params = list()
     commands = tool_xml_root.findall('./command')
     command = commands[0].text if commands else None
     for param in tool_xml_root.findall('.//inputs//param[@type="data"]'):

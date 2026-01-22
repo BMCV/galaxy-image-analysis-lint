@@ -5,7 +5,6 @@ import pathlib
 from Cheetah import NameMapper
 from Cheetah.Template import Template
 from Cheetah.Parser import ParseError
-from lxml import etree
 
 from ..utils import (
     flat_dict_to_nested,
