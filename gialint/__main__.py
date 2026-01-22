@@ -3,14 +3,19 @@ import pathlib
 import sys
 
 from galaxy.util import xml_macros
-import yaml
 
-from gialint._context import Context
+import yaml
 
 from . import (
     check,
     codes,
     list_codes,
+)
+from ._context import Context
+
+# Monkey-patch `xml_macros` to not remove comments:
+xml_macros.raw_xml_tree = lambda path: (
+    xml_macros.parse_xml(path, strip_whitespace=False, remove_comments=False)
 )
 
 gialint_root_path = pathlib.Path(__file__).parent
@@ -21,7 +26,6 @@ parser.add_argument('--ignore', action='append', type=str, default=list())
 parser.add_argument('--details_indent', type=int, default=4)
 parser.add_argument('--config', type=str, default='.gialint.yml')
 args = parser.parse_args()
-
 
 if args.config:
     with open(args.config, 'r') as fp:

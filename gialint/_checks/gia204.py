@@ -1,3 +1,4 @@
+import difflib
 import textwrap
 import pathlib
 
@@ -50,7 +51,10 @@ def check(tool_xml_root):
 
             # Validate that `template_id` is a valid template
             if template_id not in templates.keys():
-                yield comment.sourceline
+                yield dict(
+                    line=comment.sourceline,
+                    details=f'No such template: "{template_id}"',
+                )
 
     # Build and validate the template for each test (with the corresponding namespace)
     base_namespace = get_base_namespace(tool_xml_root)
@@ -81,5 +85,15 @@ def check(tool_xml_root):
                     # Validate that `actual` corresponds to `header`
                     actual = _list_nonempty_lines(textwrap.dedent(result))
                     if actual != header:
-                        print(actual)
-                        yield comment.sourceline
+                        yield dict(
+                            line=comment.sourceline,
+                            details='\n'.join(
+                                difflib.unified_diff(
+                                    header,
+                                    actual,
+                                    fromfile='expected',
+                                    tofile='actual',
+                                    lineterm='',  # avoid extra newlines
+                                ),
+                            ),
+                        )
