@@ -59,6 +59,9 @@ class InputDataset:
     def ext(self) -> str:
         return self.extension()
 
+    def file_ext(self) -> str:
+        return self.extension()
+
     def name(self) -> str:
         return pathlib.Path(self._filepath).name
 

@@ -66,6 +66,9 @@ class InputDataset(unittest.TestCase):
     def test_extension(self):
         self.assertEqual(self.dataset.extension(), 'ext1.ext2')
 
+    def test_file_ext(self):
+        self.assertEqual(self.dataset.file_ext(), 'ext1.ext2')
+
     def test__str__(self):
         self.assertEqual(str(self.dataset), self.filepath)
 
