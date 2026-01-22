@@ -2,13 +2,16 @@ import pathlib
 
 from lxml import etree
 
+from .wrappers import InputValueWrapper
+
 
 def _create_simple_type_converter(target_type):
     def _type(value: str):
         if value == '':
             return UnsetValue()
         else:
-            return target_type(value)
+            #return target_type(value)
+            return InputValueWrapper(value)
     return _type
 
 

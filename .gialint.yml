@@ -1,6 +1,6 @@
-'**/galaxy-image-analysis/tools/rfove/rfove.xml':
-  ignore:
-    - GIA202  # probably a bug in tool XML (check!)
+#'**/galaxy-image-analysis/tools/rfove/rfove.xml':
+#  ignore:
+#    - GIA202  # probably a bug in tool XML (check!)
 
 '**/galaxy-image-analysis/tools/superdsm/superdsm.xml':
   ignore:
