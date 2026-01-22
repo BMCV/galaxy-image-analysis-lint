@@ -4,7 +4,6 @@ import sys
 import tempfile
 import unittest
 
-
 repo_root_path = pathlib.Path(__file__).parent.parent
 
 
@@ -12,7 +11,7 @@ class SystemTest(unittest.TestCase):
 
     def setUp(self):
         self.tempdir = tempfile.TemporaryDirectory()
-        result = subprocess.run(
+        subprocess.run(
             ';'.join(
                 [
                     'cd "{}"'.format(self.tempdir.name),
@@ -44,5 +43,5 @@ class SystemTest(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
         if 'traceback' in result.stderr.lower():
-            print(result.stderr, file=sys.stderr)
+            print('\n', result.stderr, file=sys.stderr)
             self.fail()

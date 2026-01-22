@@ -1,9 +1,9 @@
 import pathlib
 import unittest
+
 from lxml import etree
 
 import gialint
-
 
 tests_root_path = pathlib.Path(__file__).parent
 

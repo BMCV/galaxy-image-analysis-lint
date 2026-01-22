@@ -2,8 +2,8 @@ import json
 import textwrap
 
 from Cheetah import NameMapper
-from Cheetah.Template import Template
 from Cheetah.Parser import ParseError
+from Cheetah.Template import Template
 
 from ..utils import (
     flat_dict_to_nested,
@@ -24,7 +24,7 @@ def check(tool_xml_root):
                     s = str(Template(template.text, searchList=namespace))
                     try:
                         json.loads(s)
-                    except json.JSONDecodeError as error:
+                    except json.JSONDecodeError:
                         yield dict(
                             line=template.sourceline,
                             details=(
