@@ -4,7 +4,6 @@ import sys
 import tempfile
 import unittest
 
-
 repo_root_path = pathlib.Path(__file__).parent.parent
 
 
