@@ -91,6 +91,17 @@ class InputDataset(unittest.TestCase):
             'store_root',
         )
 
+    def test_is_of_type(self):
+        self.assertTrue(self.dataset.is_of_type('ext1'))
+        self.assertTrue(self.dataset.is_of_type('ext2'))
+        self.assertFalse(self.dataset.is_of_type('filename'))
+        self.assertTrue(
+            utils.InputDataset('.txt').is_of_type('txt'),
+        )
+        self.assertFalse(
+            utils.InputDataset('txt').is_of_type('txt'),
+        )
+
 
 class ToolTest(unittest.TestCase):
 

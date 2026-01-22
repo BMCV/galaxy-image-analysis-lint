@@ -53,8 +53,7 @@ class InputDataset:
         return self._filepath
 
     def extension(self) -> str:
-        name = pathlib.Path(self._filepath).name
-        return '.'.join(name.split('.')[1:]).lower()
+        return '.'.join(self.name().split('.')[1:]).lower()
 
     def ext(self) -> str:
         return self.extension()
@@ -80,6 +79,12 @@ class InputDataset:
                 return self.ZarrMetadata()
             case _:
                 return self.Metadata()
+
+    def is_of_type(self, ext) -> bool:
+        """
+        Mocks the behaviour of `galaxy.tools.wrappers.DatasetFilenameWrapper.is_of_type` naively.
+        """
+        return ext.lower() in self.name().lower().split('.')[1:]
 
     @staticmethod
     def converter(multiple: bool = False):
