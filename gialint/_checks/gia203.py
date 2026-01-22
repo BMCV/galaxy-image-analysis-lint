@@ -2,8 +2,8 @@ import json
 import textwrap
 
 from Cheetah import NameMapper
-from Cheetah.Template import Template
 from Cheetah.Parser import ParseError
+from Cheetah.Template import Template
 
 from ..utils import (
     flat_dict_to_nested,
