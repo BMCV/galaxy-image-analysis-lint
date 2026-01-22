@@ -17,6 +17,7 @@ on:
       - tests/checks/**/.xml
       - tests/tools/**/.xml
       - requirements.txt
+      - tests/requirements.txt
 
 jobs:
   python_lint:
