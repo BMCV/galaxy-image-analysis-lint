@@ -1,6 +1,7 @@
 # galaxy-image-analysis-lint
 
 [![Coverage](https://img.shields.io/endpoint?url=https://gist.githubusercontent.com/kostrykin/fff2bce97225bf905bae26d517a6c41c/raw/gialint.json)](https://github.com/BMCV/galaxy-image-analysis-lint/actions/workflows/testsuite.yml)
+[![PyPI](https://img.shields.io/pypi/v/gialint)](http://pypi.org/p/gialint)
 
 Example usage:
 ```bash
