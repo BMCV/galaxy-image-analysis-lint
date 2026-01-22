@@ -12,7 +12,7 @@ class SystemTest(unittest.TestCase):
 
     def setUp(self):
         self.tempdir = tempfile.TemporaryDirectory()
-        result = subprocess.run(
+        subprocess.run(
             ';'.join(
                 [
                     'cd "{}"'.format(self.tempdir.name),
