@@ -2,9 +2,8 @@ import argparse
 import pathlib
 import sys
 
-from galaxy.util import xml_macros
-
 import yaml
+from galaxy.util import xml_macros
 
 from . import (
     check,
