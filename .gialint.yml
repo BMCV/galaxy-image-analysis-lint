@@ -1,10 +1,10 @@
 '**/galaxy-image-analysis/tools/rfove/rfove.xml':
   ignore:
-    - GIA202  # probably a bug in tool XML (check!)
+    - GIA202  # using `.value` on input variables is discouraged
 
 '**/galaxy-image-analysis/tools/superdsm/superdsm.xml':
   ignore:
-    - GIA202  # probably a bug in tool XML (check!)
+    - GIA202  # using `.value` on input variables is discouraged
 
 '**/galaxy-image-analysis/tools/2d_simple_filter/filter.xml':
   ignore:
