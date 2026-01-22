@@ -27,11 +27,13 @@ parser.add_argument('--details_indent', type=int, default=4)
 parser.add_argument('--config', type=str, default='.gialint.yml')
 args = parser.parse_args()
 
+# Load config (empty if not specified)
+config = dict()
 if args.config:
-    with open(args.config, 'r') as fp:
-        config = yaml.safe_load(fp)
-else:
-    config = dict()
+    config_filepath = pathlib.Path(args.config)
+    if config_filepath.is_file():
+        with config_filepath.open('r') as fp:
+            config = yaml.safe_load(fp)
 
 
 def list_tool_xml(path):

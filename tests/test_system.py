@@ -44,5 +44,5 @@ class SystemTest(unittest.TestCase):
             stderr=subprocess.PIPE,
         )
         if 'traceback' in result.stderr.lower():
-            print(result.stderr, file=sys.stderr)
+            print('\n', result.stderr, file=sys.stderr)
             self.fail()
