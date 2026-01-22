@@ -3,6 +3,41 @@ import pathlib
 from lxml import etree
 
 
+def _create_simple_type_converter(target_type):
+    def _type(value: str):
+        if value == '':
+            return UnsetValue()
+        else:
+            return target_type(value)
+    return _type
+
+
+def _create_boolean_converter(param):
+    def _type(checked):
+        return param.attrib.get(f'{checked}value', checked)
+    return _type
+
+
+def _create_type_converter(param):
+    param_type = param.attrib.get('type', '').lower()
+    assert param_type != ''  # pre-condition
+    match param_type:
+        case 'integer':
+            return _create_simple_type_converter(int)
+        case 'float':
+            return _create_simple_type_converter(float)
+        case 'color':
+            return _create_simple_type_converter(str)
+        case 'boolean':
+            return _create_boolean_converter(param)
+        case 'data':
+            return InputDataset.converter(
+                param.attrib.get('multiple', '').lower() == 'true',
+            )
+        case _:
+            return None
+
+
 def _list_parents(node, include_self=False, stop_at=('inputs', 'test', 'repeat')):
     current = node
     while current is node or current.tag not in stop_at:
@@ -19,12 +54,6 @@ def get_full_name(node):
         elif len(tokens) == 0 and (p_argument := p.get('argument')):
             tokens.append(p_argument.removeprefix('--').replace('-', '_'))
     return '.'.join(tokens[::-1])
-
-
-def _create_boolean_converter(param):
-    def _type(checked):
-        return param.attrib.get(f'{checked}value', checked)
-    return _type
 
 
 def _get_node_by_name(full_name, root_xml, multiple: bool = False):
@@ -98,6 +127,24 @@ class InputDataset:
         return _converter
 
 
+class UnsetValue:
+
+    def __bool__(self):
+        return False
+
+    def __str__(self):
+        return ''
+
+    def __eq__(self, other):
+        return isinstance(other, UnsetValue)
+
+    def __lt__(self, other):
+        return False
+
+    def __gt__(self, other):
+        return False
+
+
 def get_test_inputs(inputs_root, test_root):
     inputs = dict()  # mps the full name of an input parameter to its raw value (prior to type conversion)
     input_types = dict()  # maps the full name of an input parameter to its type converter
@@ -106,7 +153,6 @@ def get_test_inputs(inputs_root, test_root):
     # Parse input parameters, default values, test values, and type converters
     for node in inputs_root.xpath('.//param | .//repeat'):
         full_node_name = get_full_name(node)
-        converter = None
 
         # Ignore the `node` if it is an ancestor of a `repeat` block (those are handled explicitly below),
         # but ignore the tag of the root node
@@ -151,19 +197,16 @@ def get_test_inputs(inputs_root, test_root):
         # Skip invalid parameters (this is handled by `planemo lint`)
         if (param_type := node.attrib.get('type', '').lower()) == '':
             continue
+        else:
+            converter = _create_type_converter(node)
 
         # Read the value from the `value` attribute
         if param_type in ('text', 'integer', 'float', 'color', 'hidden', 'data'):
-            inputs[full_node_name] = node.attrib.get('value')
-            if param_type == 'data':
-                converter = InputDataset.converter(
-                    node.attrib.get('multiple', '').lower() == 'true',
-                )
+            inputs[full_node_name] = node.attrib.get('value', '')
 
         # Read the value from the `checked` attribute
         if param_type in ('boolean',):
             inputs[full_node_name] = node.attrib.get('checked', 'false')
-            converter = _create_boolean_converter(node)
 
         # Read the value from children elements
         if (default_options := node.xpath('./option[translate(@selected, "TRUE", "true")="true"]')):
@@ -181,7 +224,7 @@ def get_test_inputs(inputs_root, test_root):
 
         # Read test value
         if (test_param := _get_node_by_name(full_node_name, test_root)) is not None:
-            inputs[full_node_name] = test_param.attrib.get('value')
+            inputs[full_node_name] = test_param.attrib.get('value', '')
 
     # Return inputs and apply type converters
     return {
