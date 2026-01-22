@@ -2,3 +2,5 @@
 /.venv
 /build
 /gialint.egg-info
+/.coverage
+/coverage.json

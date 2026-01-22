@@ -1,3 +1,5 @@
 [run]
-omit = tests/*
-parallel = True
+omit =
+    tests/*
+    DynamicallyCompiledCheetahTemplate.py
+    cheetah_*.py
