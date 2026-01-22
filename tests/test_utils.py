@@ -143,7 +143,7 @@ class FullTest(ToolTest):
     tool = 'utils_full.xml'
 
     def test_list_tests(self):
-        self.assertEqual(len(list(utils.list_tests(self.tool_xml_root))), 2)
+        self.assertEqual(len(list(utils.list_tests(self.tool_xml_root))), 3)
 
     def test_get_test_inputs1(self):
         test_inputs = (
@@ -261,3 +261,11 @@ class FullTest(ToolTest):
                 'repeat_2',
             ],
         )
+
+    def test_get_test_inputs3(self):
+        test_inputs = (
+            utils.get_test_inputs(self.inputs_xml, self.test_xml_list[2])
+        )
+
+        self.assertEqual(test_inputs['boolean_1'], 'false')
+        self.assertEqual(test_inputs['boolean_2'], 'TRUE')

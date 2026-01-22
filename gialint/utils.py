@@ -14,7 +14,7 @@ def _create_simple_type_converter(target_type):
 
 def _create_boolean_converter(param):
     def _type(checked):
-        return param.attrib.get(f'{checked}value', checked)
+        return param.attrib.get(f'{checked.lower()}value', checked.lower())
     return _type
 
 

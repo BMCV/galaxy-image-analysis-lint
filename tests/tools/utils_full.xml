@@ -119,5 +119,11 @@
             </repeat>
         </test>
 
+        <!-- Test 3: More boolean tests -->
+        <test>
+            <param name="boolean_1" value="False"/>
+            <param name="boolean_2" value="True"/>
+        </test>
+
     </tests>
 </tool>
