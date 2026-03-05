@@ -4,3 +4,4 @@
 /gialint.egg-info
 /.coverage
 /coverage.json
+**/.*.swp
