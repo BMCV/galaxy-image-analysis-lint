@@ -68,7 +68,7 @@ def list_violations(tool_xml_path, ignore_codes):
             yield Context(code, getattr(codes, code), tool_xml_path, **info)
 
 
-working_path = pathlib.Path(args.tool_path) or pathlib.Path.cwd()
+working_path = pathlib.Path(args.tool_path) if args.tool_path else pathlib.Path.cwd()
 violations_count = 0
 for tool_xml_path in list_tool_xml(working_path):
     tree = xml_macros.load(tool_xml_path)
