@@ -71,7 +71,11 @@ def check(tool_xml_root):
                         f'./comment()[starts-with(normalize-space(.), "{full_prefix}")]',
                     )
                 ) is not None:
-                    comment_text = textwrap.dedent(comment.text).strip()
+                    comment_text = (
+                        textwrap.dedent(comment.text)
+                        .strip()
+                        .replace('––', '--')  # double dash is not allowed in XML comments, use double n-dash instead
+                    )
                     header = _list_nonempty_lines(comment_text)
                     header.pop(0)
 
