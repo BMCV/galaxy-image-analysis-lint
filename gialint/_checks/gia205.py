@@ -3,7 +3,9 @@ import difflib
 import re
 import warnings
 
-from pydantic._internal._generate_schema import UnsupportedFieldAttributeWarning
+from pydantic._internal._generate_schema import (
+    UnsupportedFieldAttributeWarning,
+)
 
 with warnings.catch_warnings():
     warnings.filterwarnings('ignore', category=UnsupportedFieldAttributeWarning)
