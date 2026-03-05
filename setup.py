@@ -19,6 +19,7 @@ setup(
     python_requires='>=3.10',
     install_requires=[
         'galaxy-util>=25.0',
+        'galaxy-tool-util>=25.0',
         'lxml>=6.0.2',
         'Cheetah3>=3.2.6.post1',
         'pyyaml>=6.0.3',

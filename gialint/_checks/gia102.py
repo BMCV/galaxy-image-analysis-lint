@@ -1,4 +1,4 @@
-def check(tool_xml_root):
+def check(tool_xml_root, tool_path):
     for path in (
         'inputs//param[@type="data"]',
         'outputs/data',

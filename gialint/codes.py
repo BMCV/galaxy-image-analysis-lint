@@ -7,3 +7,4 @@ GIA201 = 'Zarr input images require special treatment within the `command` of th
 GIA202 = 'Cheetah code is invalid.'
 GIA203 = 'Cheetah code for `configfile` recognized as JSON but JSON code is invalid.'
 GIA204 = 'Cheetah code yields not the expected result.'
+GIA205 = 'Command uses Python script that is not referenced under `required_files`.'

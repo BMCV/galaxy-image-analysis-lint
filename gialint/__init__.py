@@ -15,7 +15,10 @@ def list_codes():
             yield attr
 
 
-def check(code, tool_xml_root):
+def check(code, tool_xml_root, tool_path):
     check_name = f'_checks.{code.lower()}'
     check_module = __import__(check_name, globals(), locals(), fromlist=['*'], level=1)
-    yield from check_module.check(tool_xml_root)
+    yield from check_module.check(
+        tool_xml_root,
+        tool_path.absolute() if tool_path else None,
+    )

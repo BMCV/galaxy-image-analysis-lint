@@ -15,11 +15,14 @@ def _create_test(code, xml_tests_filepath, xml_test):
         if expected_lines_with_violations_str.strip() else list()
     )
 
+    tool_path_str = xml_test.attrib.get('tool_path', '')
+    tool_path = pathlib.Path(tool_path_str) if tool_path_str else None
+
     def format_lines_list(lines_list):
         return ', '.join(f'{line}' for line in lines_list) or 'none'
 
     def test(testcase):
-        check_results = list(gialint.check(code, xml_test))
+        check_results = list(gialint.check(code, xml_test, tool_path))
         actual_lines_with_violations = [
             info if isinstance(info, int) else info['line'] for info in check_results
         ]

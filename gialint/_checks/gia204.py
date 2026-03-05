@@ -51,7 +51,7 @@ def _apply_options(lines: list[str], options: tuple[str, ...]) -> list[str]:
     return result
 
 
-def check(tool_xml_root):
+def check(tool_xml_root, tool_path):
     templates = {
         template.attrib.get('name', ''): template
         for template in tool_xml_root.xpath('./command | ./configfiles/configfile')
