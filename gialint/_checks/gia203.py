@@ -13,7 +13,7 @@ from ..utils import (
 )
 
 
-def check(tool_xml_root):
+def check(tool_xml_root, tool_path):
     base_namespace = get_base_namespace(tool_xml_root)
     if (inputs_xml_list := tool_xml_root.findall(f'./inputs')):
         inputs_xml = inputs_xml_list[0]

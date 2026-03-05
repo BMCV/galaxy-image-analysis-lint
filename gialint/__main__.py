@@ -43,7 +43,7 @@ def list_tool_xml(path):
             yield xml_path
 
 
-def list_violations(tool_xml_path, ignore_codes):
+def list_violations(tree, tool_xml_path, ignore_codes):
     for code in list_codes():
 
         # Skip the check if it was passed via `--ignore`
@@ -62,7 +62,7 @@ def list_violations(tool_xml_path, ignore_codes):
             continue
 
         # Run the checks
-        for info in check(code, tree.getroot()):
+        for info in check(code, tree.getroot(), tool_xml_path.parent):
             if isinstance(info, int):
                 info = dict(line=info)
             yield Context(code, getattr(codes, code), tool_xml_path, **info)
@@ -76,7 +76,7 @@ for tool_xml_path in list_tool_xml(working_path):
 
         sys.stdout.write(f'Linting {tool_xml_path}... ')
         sys.stdout.flush()
-        violations = list(list_violations(tool_xml_path, args.ignore))
+        violations = list(list_violations(tree, tool_xml_path, args.ignore))
 
         if violations:
             print('FAILED')

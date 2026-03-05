@@ -1,0 +1,44 @@
+<tests>
+    <test-tool>
+    </test-tool>
+    <test-tool>
+        <command>
+        </command>
+    </test-tool>
+    <test-tool tool_path="tests/checks/gia205">
+        <!--
+        Parsing `command` encounters a `NotFound` error but this check should pass,
+        because there is a dedicated code/check for such errors.
+        -->
+        <command><![CDATA[
+            echo "$configfile1" "$configfile2" &&
+            python test1.py
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+            ]]></configfile>
+        </configfiles>
+        <required_files>
+            <include path="test1.py"/>
+        </required_files>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+    <test-tool tool_path="tests/checks/gia205" lines_with_volations="29">
+        <command><![CDATA[
+            echo "$configfile1" "$configfile2" &&
+            python test1.py
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+            ]]></configfile>
+        </configfiles>
+        <required_files>
+            <include path="other.py"/>
+        </required_files>
+        <tests>
+            <test/>
+        </tests>
+    </test-tool>
+</tests>

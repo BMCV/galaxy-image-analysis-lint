@@ -1,4 +1,4 @@
-def check(tool_xml_root):
+def check(tool_xml_root, tool_path):
     for param in tool_xml_root.findall(".//inputs//param[@type='data']"):
         formats = [fmt.strip().lower() for fmt in param.get('format', '').split(',')]
         if (

@@ -10,7 +10,7 @@ from ..utils import (
 )
 
 
-def check(tool_xml_root):
+def check(tool_xml_root, tool_path):
     base_namespace = get_base_namespace(tool_xml_root)
     for path in (
         'command',
