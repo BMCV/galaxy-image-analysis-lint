@@ -114,11 +114,6 @@ def check(tool_xml_root):
                     header = _apply_options(header, options)
                     actual = _apply_options(actual, options)
                     if actual != header:
-                        print('=' * 20)
-                        print(actual)
-                        print('-' * 20)
-                        print(header)
-                        print('=' * 20)
                         yield dict(
                             line=comment.sourceline,
                             details='\n'.join(
