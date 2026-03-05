@@ -11,7 +11,7 @@
         because there is a dedicated code/check for such errors.
         -->
         <command><![CDATA[
-            echo "$configfile1" "$configfile2"
+            echo "$configfile1" -- "$configfile2"
         ]]></command>
         <configfiles>
             <configfile name="configfile1"><![CDATA[
@@ -32,7 +32,7 @@
             <test>
                 <!--
                     GIA204:
-                    echo "$configfile1" "$configfile2"
+                    echo "$configfile1" –– "$configfile2"
                 -->
                 <!--
                     GIA204: configfile1
@@ -84,6 +84,43 @@
                 GIA204: configfile1
                 spurious
                 -->
+            </test>
+        </tests>
+    </test-tool>
+    <test-tool>
+        <command><![CDATA[
+            echo \
+                "$configfile1" \
+                    "foo"
+        ]]></command>
+        <configfiles>
+            <configfile name="configfile1"><![CDATA[
+                {
+                    "int": $int,
+                        "data": "$data"
+                }
+            ]]></configfile>
+        </configfiles>
+        <inputs>
+            <param name="int" type="integer" value="0"/>
+            <param name="data" type="data"/>
+        </inputs>
+        <tests>
+            <test>
+                <!--
+                    GIA204: :relax_indent:
+                    echo \
+                        "$configfile1" \
+                        "foo"
+                -->
+                <!--
+                    GIA204: configfile1 :relax_indent:
+                    {
+                        "int": 0,
+                        "data": "filename"
+                    }
+                -->
+                <param name="data" value="filename"/>
             </test>
         </tests>
     </test-tool>

@@ -1,5 +1,6 @@
 import difflib
 import pathlib
+import re
 import textwrap
 
 from Cheetah import NameMapper
@@ -32,6 +33,24 @@ def _list_nonempty_lines(s: str) -> list[str]:
     )
 
 
+def _list_options(s: str) -> tuple[str, ...]:
+    if (m := re.search(r':([^:]+):', s)):
+        return m.groups()
+    else:
+        return tuple()
+
+
+def _apply_options(lines: list[str], options: tuple[str, ...]) -> list[str]:
+    result = list()
+    for line in lines:
+
+        if 'relax_indent' in options:
+            line = line.lstrip()
+
+        result.append(line)
+    return result
+
+
 def check(tool_xml_root):
     templates = {
         template.attrib.get('name', ''): template
@@ -48,6 +67,10 @@ def check(tool_xml_root):
 
             # Do not strip this, because the `xpath` lookup below requires the original tokens:
             template_id = header.pop(0).removeprefix(prefix).removeprefix(' ')
+
+            # Strip options that may be given as a suffix
+            if ':' in template_id:
+                template_id = template_id[:template_id.index(':')].strip()
 
             # Validate that `template_id` is a valid template
             if template_id not in templates.keys():
@@ -71,9 +94,13 @@ def check(tool_xml_root):
                         f'./comment()[starts-with(normalize-space(.), "{full_prefix}")]',
                     )
                 ) is not None:
-                    comment_text = textwrap.dedent(comment.text).strip()
+                    comment_text = (
+                        textwrap.dedent(comment.text)
+                        .strip()
+                        .replace('––', '--')  # double dash is not allowed in XML comments, use double n-dash instead
+                    )
                     header = _list_nonempty_lines(comment_text)
-                    header.pop(0)
+                    options = _list_options(header.pop(0)[len(full_prefix):])
 
                     # Build the template (with the corresponding namespace)
                     namespace = base_namespace | flat_dict_to_nested(get_test_inputs(inputs_xml, test_xml))
@@ -84,6 +111,8 @@ def check(tool_xml_root):
 
                     # Validate that `actual` corresponds to `header`
                     actual = _list_nonempty_lines(textwrap.dedent(result))
+                    header = _apply_options(header, options)
+                    actual = _apply_options(actual, options)
                     if actual != header:
                         yield dict(
                             line=comment.sourceline,
