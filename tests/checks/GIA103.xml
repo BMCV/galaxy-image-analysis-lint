@@ -1,0 +1,14 @@
+<tests>
+    <test-tool lines_with_volations="5,6,9,10">
+        <outputs>
+            <data format="tabular"/>
+            <data format="tsv"/>
+            <data format="csv"/>
+            <collection>
+                <discover_datasets format="tabular"/>
+                <discover_datasets format="tsv"/>
+                <discover_datasets format="csv"/>
+            </collection>
+        </outputs>
+    </test-tool>
+</tests>
