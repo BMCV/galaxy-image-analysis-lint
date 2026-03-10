@@ -1,0 +1,21 @@
+<tests>
+    <test-tool>
+        <edam_operations>
+            <edam_operation>operation_3443</edam_operation>
+        </edam_operations>
+    </test-tool>
+    <test-tool lines_with_volations="7">
+        <edam_operations>
+            <edam_operation>operation_3442</edam_operation>
+        </edam_operations>
+    </test-tool>
+    <test-tool lines_with_volations="12">
+        <edam_operations>
+            <edam_operation></edam_operation>
+        </edam_operations>
+    </test-tool>
+    <test-tool lines_with_volations="17">
+        <edam_operations/>
+    </test-tool>
+    <test-tool lines_with_volations="20"/>
+</tests>
