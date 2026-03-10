@@ -9,3 +9,6 @@ GIA202 = 'Cheetah code is invalid.'
 GIA203 = 'Cheetah code for `configfile` recognized as JSON but JSON code is invalid.'
 GIA204 = 'Cheetah code yields not the expected result.'
 GIA205 = 'Command uses Python script that is not referenced under `required_files`.'
+
+# Issues with annotations
+GIA301 = 'Image data tools should be annotated with the EDAM operation `operation_3443` by convention.'
