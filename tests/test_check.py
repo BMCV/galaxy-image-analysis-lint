@@ -1,10 +1,11 @@
 import pathlib
+import sys
 import unittest
 import unittest.mock
-import sys
+
+from lxml import etree
 
 import gialint
-from lxml import etree
 
 
 def _create_check_mock(lines):
