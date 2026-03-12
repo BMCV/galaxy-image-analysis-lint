@@ -34,10 +34,9 @@ def _list_nonempty_lines(s: str) -> list[str]:
 
 
 def _list_options(s: str) -> tuple[str, ...]:
-    if (m := re.search(r':([^:]+):', s)):
-        return m.groups()
-    else:
-        return tuple()
+    return tuple(
+        re.findall(r':([^:]+):', s),
+    )
 
 
 def _apply_options(lines: list[str], options: tuple[str, ...]) -> list[str]:
@@ -47,8 +46,23 @@ def _apply_options(lines: list[str], options: tuple[str, ...]) -> list[str]:
         if 'relax_indent' in options:
             line = line.lstrip()
 
+        if 'relax_linewrap' in options:
+            line = line.lstrip().removesuffix('\\')
+
+        if 'relax_whitespace' in options:
+            line = re.sub(r' +', ' ', line)
+
         result.append(line)
-    return result
+
+    if 'relax_linewrap' in options:
+        s = ' '.join(result)
+        return (
+            re.sub(r' +', ' ', s)
+            if 'relax_whitespace' in options
+            else s
+        )
+    else:
+        return result
 
 
 def check(tool_xml_root, tool_path):

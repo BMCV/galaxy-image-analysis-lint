@@ -122,6 +122,19 @@
                 -->
                 <param name="data" value="filename"/>
             </test>
+            <test>
+                <!--
+                    GIA204: :relax_linewrap: :relax_whitespace:
+                    echo "$configfile1" "foo"
+                -->
+                <!--
+                    GIA204: configfile1 :relax_linewrap:
+                    {
+                        "int": 0, "data": "filename"
+                    }
+                -->
+                <param name="data" value="filename"/>
+            </test>
         </tests>
     </test-tool>
 </tests>
