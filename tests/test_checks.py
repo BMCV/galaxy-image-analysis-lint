@@ -1,4 +1,5 @@
 import pathlib
+import textwrap
 import unittest
 
 from lxml import etree
@@ -26,11 +27,23 @@ def _create_test(code, xml_tests_filepath, xml_test):
         actual_lines_with_violations = [
             info if isinstance(info, int) else info['line'] for info in check_results
         ]
+        details = {info['line']: info['details'] for info in check_results if isinstance(info, dict)}
         if actual_lines_with_violations != expected_lines_with_violations:
+            spurious_violations = (
+                frozenset(actual_lines_with_violations) - frozenset(expected_lines_with_violations)
+            )
+            details_str = textwrap.indent(
+                '' if len(spurious_violations) == 0 else
+                '\n\n' + '\n\n'.join(
+                    f'Details for line {line}:\n{textwrap.indent(details[line], prefix="|   ")}'
+                    for line in spurious_violations if line in details
+                ),
+                prefix=' ' * 2,
+            )
             testcase.fail(
                 f'{xml_tests_filepath}:{xml_test.sourceline}\n'
                 f'    expected failures on lines: {format_lines_list(expected_lines_with_violations)}\n'
-                f'    but actual failures were on: {format_lines_list(actual_lines_with_violations)}'
+                f'    but actual failures were on: {format_lines_list(actual_lines_with_violations)}' + details_str
             )
 
     return test
