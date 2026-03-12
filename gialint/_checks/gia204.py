@@ -57,9 +57,9 @@ def _apply_options(lines: list[str], options: tuple[str, ...]) -> list[str]:
     if 'relax_linewrap' in options:
         s = ' '.join(result)
         return (
-            re.sub(r' +', ' ', s)
+            [re.sub(r' +', ' ', s)]
             if 'relax_whitespace' in options
-            else s
+            else [s]
         )
     else:
         return result
