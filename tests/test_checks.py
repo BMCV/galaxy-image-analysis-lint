@@ -9,12 +9,30 @@ import gialint
 tests_root_path = pathlib.Path(__file__).parent
 
 
-def _create_test(code, xml_tests_filepath, xml_test):
+def _parse_line_with_violation(line0: int, line_str: str):
+    line_str = line_str.strip()
+    if line_str.startswith('+'):
+        return line0 + int(line_str[1:])
+    else:
+        return int(line_str)
+
+
+def _parse_lines_with_violations(xml_test):
     expected_lines_with_violations_str = xml_test.attrib.get('lines_with_volations', '')
-    expected_lines_with_violations = (
-        [int(line.strip()) for line in expected_lines_with_violations_str.split(',')]
+    return (
+        [
+            _parse_line_with_violation(
+                xml_test.sourceline,
+                line_str,
+            )
+            for line_str in expected_lines_with_violations_str.split(',')
+        ]
         if expected_lines_with_violations_str.strip() else list()
     )
+
+
+def _create_test(code, xml_tests_filepath, xml_test):
+    expected_lines_with_violations = _parse_lines_with_violations(xml_test)
 
     tool_path_str = xml_test.attrib.get('tool_path', '')
     tool_path = pathlib.Path(tool_path_str) if tool_path_str else None
