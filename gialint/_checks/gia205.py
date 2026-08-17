@@ -16,7 +16,9 @@ from lxml import etree
 
 
 def _guess_required_files_list(command: str) -> list[str]:
-    return re.findall(r'\b[\w.-]+\.py\b', command, re.IGNORECASE)
+    return frozenset(
+        re.findall(r'\b[\w.-]+\.py\b', command, re.IGNORECASE),
+    )
 
 
 def check(tool_xml_root, tool_path):
